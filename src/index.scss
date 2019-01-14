@@ -1,0 +1,20 @@
+$font-family-sans-serif: 'Exo 2';
+$navbar-padding-y: 1rem;
+$navbar-brand-font-size: 1.5rem;
+
+@import '../node_modules/bootstrap/scss/bootstrap.scss';
+
+body {
+  background: #FFF;
+}
+
+.navbar {
+  @include gradient-y(#8b77bf, #6d54af);
+  color: #fff;
+
+  img {
+    margin-top: -10px;
+    margin-right: 0.5rem;
+  }
+}
+
