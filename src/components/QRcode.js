@@ -27,7 +27,7 @@ export default class QRcode extends Component {
                 <QRCodeCanvas
                     value={this.state.clientId}
                     size={256}
-                    fgColor="#000"
+                    fgColor="#331b72"
                     bgColor="#fff"
                     level="L"
                     renderAs="svg"

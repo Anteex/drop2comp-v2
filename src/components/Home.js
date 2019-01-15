@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import uniqid from '../helpers/uniqid';
 import QRcode from './QRcode';
+import { links } from '../config'
 
 
 export default class Home extends Component {
@@ -34,13 +35,13 @@ export default class Home extends Component {
     render() {
         return (
             <div className="container-fluid">
-                <a href="#" onClick={this.updateQR}>update</a>
+                <button onClick={this.updateQR}>update</button>
                 <h1 className="text-center mt-5">
-                    It's an easy way to share your files, documents or pictures from your phone to any PC or Mac nearby. USB cable not required.
+                    It's an easy way to share your files, documents or pictures from your phone to any PC or Mac nearby. USB cable is not required.
                 </h1>
                 <h3 className="text-center my-4">
                     Just select a file on your phone and tap "share via ...".
-                    Then choose <a href="https://play.google.com/store/apps/details?id=com.drop2comp&amp;utm_source=drop2comp">our app</a>
+                    Then choose <a href={links.download}>our app</a>
                 </h3>
                 <QRcode clientId={this.state.clientId} />
                 <h3 className="text-center my-4">
