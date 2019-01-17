@@ -1,0 +1,9 @@
+.indeterminate {
+  position: relative;
+  animation: progress-indeterminate 2s linear infinite;
+}
+
+@keyframes progress-indeterminate {
+  from { left: -65%; width: 65%; }
+  to { left: 100%; width: 65%;}
+}

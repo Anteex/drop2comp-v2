@@ -1,82 +1,12 @@
 $font-family-sans-serif: 'Exo 2';
 $navbar-padding-y: 1rem;
 $navbar-brand-font-size: 1.5rem;
-
+$primary: #5e5083;
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
 
 $fa-font-path: "/assets/font-awesome/fonts";
 @import '/assets/font-awesome/scss/font-awesome.scss';
 
-body {
-  background: #FFF;
-}
-
-.navbar {
-  @include gradient-y(#8b77bf, #6d54af);
-  color: #fff;
-
-  img {
-    margin-top: -10px;
-    margin-right: 0.5rem;
-  }
-}
-
-.sidenav-main {
-  @media (min-width: 768px) {
-    padding-left: 64px;
-  }
-}
-
-.sidenav---sidenav---_2tBP {
-  position: fixed !important;
-  background: #8e8e8e !important;
-}
-
-.sidenav---sidenav-toggle---1KRjR {
-  margin: 4px 0px !important;
-}
-
-.sidenav---navtext---1AE_f {
-  color: #eee !important;
-}
-
-.sidenav---navicon---3gCRo {
-  margin-top: 5px;
-}
-
-.sidenav-icon {
-  color: #eee !important;
-  font-size: 1.75em;
-}
-
-footer {
-  padding: 50px 0;
-  margin-top: 200px;
-  background: #5e5083;
-  color:#ccc;
-
-  a {
-    color: #ccc;
-
-    &:hover {
-      color: #ccc;
-    }
-  }
-
-  img {
-    padding-right: 7px;
-    padding-bottom: 3px;
-  }
-
-  p {
-    margin-bottom: 0.2rem;
-  }
-
-  i {
-    margin-right: 10px;
-  }
-}
-
-
-
-
+@import '/scss/common.scss';
+@import '/scss/sidemenu.scss';
+@import '/scss/indeterminate.scss';

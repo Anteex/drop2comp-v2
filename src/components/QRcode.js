@@ -36,7 +36,7 @@ export default class QRcode extends Component {
             )
         }
         return (
-            <div className="text-center p-5">
+            <div>
                 {qrcode}
             </div>
         )

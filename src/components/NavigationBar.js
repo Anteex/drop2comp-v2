@@ -25,8 +25,15 @@ export default class NavigationBar extends Component {
     render() {
         const menuItems = this.menu.map((item, key) => {
             return (
-                <NavItem key={key}>
-                    <NavLink href={"/" + item.path}>{item.title}</NavLink>
+                <NavItem key={key} className="pb-3">
+                    <div className="row">
+                        <div className="col-2 text-center">
+                            <span className={item.icon + " fa sidenav-icon"} aria-hidden="true"></span>
+                        </div>
+                        <div className="col">
+                            <NavLink href={"/" + item.path} className="d-inline">{item.title}</NavLink>
+                        </div>
+                    </div>
                 </NavItem>
             )
         })
@@ -35,7 +42,7 @@ export default class NavigationBar extends Component {
                 <BrandLogo />
                 <NavbarToggler onClick={this.toggle} />
                 <Collapse isOpen={this.state.isOpen} navbar>
-                    <Nav className="pt-3 d-md-none" navbar>
+                    <Nav className="pt-5 d-md-none" navbar>
                         {menuItems}
                     </Nav>
                     <GetAppMenu />
