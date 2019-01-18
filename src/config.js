@@ -37,3 +37,10 @@ export const mainMenu = [
     }
 ]
 
+export const firebaseConfig = {
+    apiKey: "AIzaSyAPSJ0vhurqrQXpvZBYLQl23movNXNBtk8",
+    authDomain: "Drop2comp.firebaseapp.com",
+    databaseURL: "https://drop2comp.firebaseio.com/",
+    storageBucket: "gs://drop2comp.appspot.com/"
+};
+

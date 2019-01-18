@@ -3,10 +3,6 @@ import {Modal, ModalBody, Progress } from 'reactstrap';
 
 export default class DialogDownloading extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         let progress
         if (this.props.rate) {

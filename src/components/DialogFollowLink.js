@@ -3,10 +3,6 @@ import {Modal, ModalBody, ModalFooter, Button } from 'reactstrap';
 
 export default class DialogFollowLink extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div>
@@ -22,7 +18,7 @@ export default class DialogFollowLink extends Component {
                             It seems you have a web link in the transferred text:
                         </p>
                         <p class="text-truncate">
-                            <a href={this.props.linkfollow} target="_blank">{this.props.linkfollow}</a>
+                            <a href={this.props.linkfollow} target="_blank" rel="noopener noreferrer">{this.props.linkfollow}</a>
                         </p>
                         <p>
                             Do you want to follow the link or continue transferring the file?

@@ -3,10 +3,6 @@ import {Modal, ModalBody, ModalFooter, Button } from 'reactstrap';
 
 export default class DialogMessage extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div>
