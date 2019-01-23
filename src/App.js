@@ -8,7 +8,7 @@ import PrivatePolicy from './components/PrivatePolicy';
 import Page404 from './components/Page404';
 import SideNav, { NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
-import { links, mainMenu } from './config'
+import { mainMenu } from './config'
 
 
 export default class App extends Component {

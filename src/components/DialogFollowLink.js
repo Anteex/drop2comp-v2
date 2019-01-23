@@ -17,16 +17,30 @@ export default class DialogFollowLink extends Component {
                         <p>
                             It seems you have a web link in the transferred text:
                         </p>
-                        <p class="text-truncate">
-                            <a href={this.props.linkfollow} target="_blank" rel="noopener noreferrer">{this.props.linkfollow}</a>
+                        <p className="text-truncate">
+                            <a
+                                href={this.props.linkfollow}
+                                onClick={this.props.onFollow}
+                                target="_blank"
+                                rel="noopener noreferrer">
+                            {this.props.linkfollow}
+                            </a>
                         </p>
                         <p>
                             Do you want to follow the link or continue transferring the file?
                         </p>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="primary">Follow</Button>
-                        <Button color="secondary">Continue</Button>
+                        <a
+                            className="btn btn-primary"
+                            href={this.props.linkfollow}
+                            onClick={this.props.onFollow}
+                            role="button"
+                            target="_blank"
+                            rel="noopener noreferrer">
+                        Follow
+                        </a>
+                        <Button color="secondary" onClick={this.props.onContinue}>Continue</Button>
                     </ModalFooter>
                 </Modal>
             </div>

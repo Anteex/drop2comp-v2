@@ -2,30 +2,22 @@ import React, { Component } from 'react';
 import QRCodeCanvas from 'qrcode.react';
 
 export default class QRcode extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            ready: false,
-            clientId: this.props.clientId
-        }
-    }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.clientId !== undefined) {
-            this.setState ({
-                clientId: nextProps.clientId
-            })
+    shouldComponentUpdate(nextProps, nextState) {
+        if (nextProps.clientId !== this.props.clientId) {
+            this.props.onUpdate();
         }
+        return true
     }
 
     render() {
         let qrcode = "";
-        if (this.state.clientId === undefined) {
+        if (this.props.clientId === undefined) {
             qrcode = "wait";
         } else {
             qrcode = (
                 <QRCodeCanvas
-                    value={this.state.clientId}
+                    value={this.props.clientId}
                     size={256}
                     fgColor="#331b72"
                     bgColor="#fff"

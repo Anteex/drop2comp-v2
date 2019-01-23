@@ -1,0 +1,16 @@
+.dropzone {
+  height: 20rem;
+  background-color: $gray-300;
+  border: dashed 3px $gray-500;
+
+  .close {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.5rem;
+  }
+
+  .note {
+    position: relative;
+    bottom: 2rem;
+  }
+}
