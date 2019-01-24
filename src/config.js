@@ -1,3 +1,10 @@
+export const config = {
+    localProtocol: 'http',
+    localPort: 8080,
+    localTimeOut: 3000
+}
+
+
 export const links = {
     googlePlay: "https://play.google.com/store/apps/dev?id=8974857995051209835",
     facebook: "https://fb.me/anteex.developer",
@@ -43,4 +50,5 @@ export const firebaseConfig = {
     databaseURL: "https://drop2comp.firebaseio.com/",
     storageBucket: "gs://drop2comp.appspot.com/"
 };
+
 

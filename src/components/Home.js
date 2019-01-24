@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import uniqid from '../helpers/uniqid'
+import uniqid from '../helpers/uniqId'
 import QRcode from './QRcode'
-import { links, firebaseConfig } from '../config'
+import { links, firebaseConfig, config } from '../config'
 import DialogDownloading from './DialogDownloading'
 import DialogFollowLink from './DialogFollowLink'
 import DialogMessage from "./DialogMessage"
@@ -10,7 +10,7 @@ import * as firebase from 'firebase/app'
 import 'firebase/database'
 import 'firebase/storage'
 import { Alert } from 'reactstrap'
-import { partiallyCompatibleBrowser, unCompatibleBrowser } from '../helpers/UncompatibleBrowser'
+import { partiallyCompatibleBrowser, unCompatibleBrowser } from '../helpers/uncompatibleBrowser'
 import $ from 'jquery'
 import downloadFile from '../helpers/downloadFile'
 
@@ -46,7 +46,9 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
-        firebase.initializeApp(firebaseConfig);
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
         this.setDatabaseListener();
     }
 
@@ -223,8 +225,8 @@ export default class Home extends Component {
         this.dialogGetFile(HIDE);
         if (this.address.match( /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/ ) !== null) {
             this.dialogDownloading(WAIT);
-            let url = 'http://' + this.address + ":8080";
-            this.timerId = setTimeout(this.abortLocalUpload, 3000, file);
+            let url = config.localProtocol + '://' + this.address + ":" + config.localPort;
+            this.timerId = setTimeout(this.abortLocalUpload, config.localTimeOut, file);
             this.request = $.ajax({
                 url: url,
                 success: () => {
@@ -249,7 +251,7 @@ export default class Home extends Component {
     startLocalUpload(file) {
         console.log("Upload locally");
         this.dialogDownloading(LOADING, 0);
-        let url = 'http://' + this.address + ":8080/" + this.state.clientId;
+        let url = config.localProtocol + '://' + this.address + ":" + config.localPort + "/" + this.state.clientId;
         let reader = new FileReader();
         let context = this;
         reader.onload = function() {
@@ -436,8 +438,8 @@ export default class Home extends Component {
             if (ip.match( /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/ ) !== null) {
                 console.log("Connecting to " + ip + " ...");
                 this.dialogDownloading(WAIT);
-                let url = "http://" + ip + ":8080/";
-                this.timerId = setTimeout(this.abortLocalDownload, 3000);
+                let url = config.localProtocol + "://" + ip + ":" + config.localPort + "/";
+                this.timerId = setTimeout(this.abortLocalDownload, config.localTimeOut);
                 this.request = $.ajax({
                     url,
                     success: () => {

@@ -7,7 +7,7 @@ export default class DialogDownloading extends Component {
         let progress
         if (this.props.rate) {
             progress = (
-                <Progress value={this.props.rate}>{this.props.rate}%</Progress>
+                <Progress animated value={this.props.rate}>{this.props.rate}%</Progress>
             )
         } else {
             progress = (

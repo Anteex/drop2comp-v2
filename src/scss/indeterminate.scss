@@ -7,3 +7,15 @@
   from { left: -65%; width: 65%; }
   to { left: 100%; width: 65%;}
 }
+
+.loadingbar-roller {
+  position: relative;
+  background-color: $primary;
+  animation: progress-indeterminate 1s linear infinite;
+}
+
+.loadingbar {
+  height: 3px;
+  border-radius: 0;
+  background-color: #fff;
+}

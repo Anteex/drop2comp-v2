@@ -73,7 +73,7 @@ export default class DialogGetFile extends Component {
     handleDropFile(evt) {
         evt.stopPropagation();
         evt.preventDefault();
-        if (evt.dataTransfer.files[0].size == 0 || evt.dataTransfer.files.length != 1) {
+        if (evt.dataTransfer.files[0].size === 0 || evt.dataTransfer.files.length !== 1) {
             this.setState({
                 warningMultiple: true
             });

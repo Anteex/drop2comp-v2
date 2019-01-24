@@ -10,10 +10,6 @@ export default class FooterBar extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-sm-6 col-md-3 pb-5">
-                            <h6 className="text-uppercase"><b>&copy;{today.getFullYear()} All rights reserved</b></h6>
-                        </div>
-                        <div className="col-sm-6 col-md-3"></div>
-                        <div className="col-sm-6 col-md-3 pb-5">
                             <h6 className="text-uppercase"><b>Social networks</b></h6>
                             <p className="pt-3">
                                 <a href={links.googlePlay} className="footer" target="_blank" rel="noopener noreferrer">
@@ -40,6 +36,10 @@ export default class FooterBar extends Component {
                                     RU
                                 </span>
                             </p>
+                        </div>
+                        <div className="col-sm-6 col-md-3"></div>
+                        <div className="col-sm-6 col-md-3 pb-5">
+                            <h6 className="text-uppercase"><b>&copy;{today.getFullYear()} All rights reserved</b></h6>
                         </div>
                     </div>
                 </div>

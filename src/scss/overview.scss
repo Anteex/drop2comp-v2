@@ -1,0 +1,17 @@
+.overview {
+
+  h1,h2,h3,h4,h5,h6 {
+    @extend .text-center;
+    @extend .pt-5;
+    @extend .pb-3;
+
+  }
+
+  img {
+    @extend .py-4;
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+}

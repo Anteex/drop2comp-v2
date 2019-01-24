@@ -1,0 +1,16 @@
+.privatepolicy {
+
+  h1,h2 {
+    @extend .text-center;
+    @extend .pt-5;
+    @extend .pb-3;
+  }
+
+  h3,h4,h5,h6 {
+    @extend .pt-3;
+    @extend .pt-1;
+  }
+
+  @extend .text-justify;
+
+}
