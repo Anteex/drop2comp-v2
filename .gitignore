@@ -23,4 +23,4 @@ yarn-debug.log*
 yarn-error.log*
 
 # assets in source
-/src/assets
+#/src/assets
