@@ -251,10 +251,12 @@ export default class Home extends Component {
     startLocalUpload(file) {
         console.log("Upload locally");
         this.dialogDownloading(LOADING, 0);
+        console.time("LocalUpload")
         let url = config.localProtocol + '://' + this.address + ":" + config.localPort + "/" + this.state.clientId;
         let reader = new FileReader();
         let context = this;
         reader.onload = function() {
+            console.timeLog("LocalUpload", "FileReader.onload");
             let xhr = new XMLHttpRequest();
             xhr.upload.onprogress = function (e) {
                 if (e.lengthComputable) {
@@ -266,6 +268,7 @@ export default class Home extends Component {
             xhr.onreadystatechange = function () {
                 if (this.readyState === 4) {
                     context.dialogDownloading(HIDE);
+                    console.timeEnd("LocalUpload");
                     if (this.status === 200) {
                         console.log("Upload status: OK");
                         console.log("Event (" + context.state.clientId + ") : ok");
@@ -277,8 +280,9 @@ export default class Home extends Component {
                     }
                 }
             };
+            console.timeLog("LocalUpload", "Listeners was setted");
             xhr.open("POST", url);
-            let boundary = this.state.clientId;
+            let boundary = context.state.clientId;
             xhr.setRequestHeader('Content-type', 'multipart/form-data; boundary="' + boundary + '"');
             xhr.setRequestHeader('Cache-Control', 'no-cache');
             let body = "--" + boundary + "\r\n";
@@ -288,6 +292,7 @@ export default class Home extends Component {
             body += reader.result + "\r\n";
             body += "--" + boundary + "--";
             console.log("Data length: " + reader.result.length);
+            console.timeLog("LocalUpload", "Body ready: ", body.length);
 
             if (!XMLHttpRequest.prototype.sendAsBinary) {
                 XMLHttpRequest.prototype.sendAsBinary = function(datastr) {
@@ -300,11 +305,13 @@ export default class Home extends Component {
                 }
             }
 
+            console.timeLog("LocalUpload", "Ready to send body");
             if(xhr.sendAsBinary) {
                 xhr.sendAsBinary(body);
             } else {
                 xhr.send(body);
             }
+            console.timeLog("LocalUpload", "Body was sended");
         };
         reader.readAsBinaryString(file);
     }
