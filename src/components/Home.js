@@ -13,6 +13,7 @@ import { Alert } from 'reactstrap'
 import { partiallyCompatibleBrowser, unCompatibleBrowser } from '../helpers/uncompatibleBrowser'
 import $ from 'jquery'
 import downloadFile from '../helpers/downloadFile'
+import axios from 'axios'
 
 
 const HIDE = 0;
@@ -253,67 +254,36 @@ export default class Home extends Component {
         this.dialogDownloading(LOADING, 0);
         console.time("LocalUpload")
         let url = config.localProtocol + '://' + this.address + ":" + config.localPort + "/" + this.state.clientId;
-        let reader = new FileReader();
         let context = this;
-        reader.onload = function() {
-            console.timeLog("LocalUpload", "FileReader.onload");
-            let xhr = new XMLHttpRequest();
-            xhr.upload.onprogress = function (e) {
-                if (e.lengthComputable) {
-                    let progress = Math.round((e.loaded / e.total) * 100);
-                    console.log('Upload is ' + progress + '% done');
-                    context.dialogDownloading(LOADING, progress);
-                }
-            };
-            xhr.onreadystatechange = function () {
-                if (this.readyState === 4) {
-                    context.dialogDownloading(HIDE);
-                    console.timeEnd("LocalUpload");
-                    if (this.status === 200) {
-                        console.log("Upload status: OK");
-                        console.log("Event (" + context.state.clientId + ") : ok");
-                        firebase.database().ref('links/' + context.state.clientId ).remove();
-                        context.updateQR();
-                    } else {
-                        console.log("Upload status: error");
-                        context.startRemoteUpload(file);
-                    }
-                }
-            };
-            console.timeLog("LocalUpload", "Listeners was setted");
-            xhr.open("POST", url);
-            let boundary = context.state.clientId;
-            xhr.setRequestHeader('Content-type', 'multipart/form-data; boundary="' + boundary + '"');
-            xhr.setRequestHeader('Cache-Control', 'no-cache');
-            let body = "--" + boundary + "\r\n";
-            body += "Content-Disposition: form-data; filename='" +  encodeURIComponent(file.name) + "'\r\n"; // unescape РїРѕР·РІРѕР»РёС‚ РѕС‚РїСЂР°РІР»СЏС‚СЊ С„Р°Р№Р»С‹ СЃ СЂСѓСЃСЃРєРѕСЏР·С‹С‡РЅС‹РјРё РёРјРµРЅР°РјРё Р±РµР· РїСЂРѕР±Р»РµРј.
-            body += "Content-Length: " + reader.result.length + "\r\n";
-            body += "Content-Type: application/octet-stream\r\n\r\n";
-            body += reader.result + "\r\n";
-            body += "--" + boundary + "--";
-            console.log("Data length: " + reader.result.length);
-            console.timeLog("LocalUpload", "Body ready: ", body.length);
 
-            if (!XMLHttpRequest.prototype.sendAsBinary) {
-                XMLHttpRequest.prototype.sendAsBinary = function(datastr) {
-                    function byteValue(x) {
-                        return x.charCodeAt(0) & 0xff;
-                    }
-                    let ords = Array.prototype.map.call(datastr, byteValue);
-                    let ui8a = new Uint8Array(ords);
-                    this.send(ui8a.buffer);
-                }
-            }
+        let formData = new FormData();
+        const blob = new Blob([file], { type: 'application/octet-stream' });
+        formData.append('filesize', file.size);
+        formData.append('file', blob, file.name);
+        console.log("File size: " + file.size);
 
-            console.timeLog("LocalUpload", "Ready to send body");
-            if(xhr.sendAsBinary) {
-                xhr.sendAsBinary(body);
-            } else {
-                xhr.send(body);
+        axios
+          .post(url, formData, {
+            onUploadProgress: ProgressEvent => {
+              let percent = Math.round(ProgressEvent.loaded / ProgressEvent.total*100);
+              context.dialogDownloading(LOADING, percent);
+              console.log('Upload is ' + percent + '% done');
             }
-            console.timeLog("LocalUpload", "Body was sended");
-        };
-        reader.readAsBinaryString(file);
+          })
+          .then(res => {
+            context.dialogDownloading(HIDE);
+            console.timeEnd("LocalUpload");
+            console.log("Upload status: OK");
+            console.log("Event (" + context.state.clientId + ") : ok");
+            firebase.database().ref('links/' + context.state.clientId ).remove();
+            context.updateQR();
+          })
+          .catch(function (error) {
+            context.dialogDownloading(HIDE);
+            console.timeEnd("LocalUpload");
+            console.log("Upload status: error");
+            context.startRemoteUpload(file);
+          });
     }
 
     startRemoteUpload(file) {
