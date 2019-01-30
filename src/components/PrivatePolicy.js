@@ -13,14 +13,25 @@ class PrivatePolicy extends Component {
         }
     }
 
+    getContent(src) {
+      fetch(src)
+          .then((response) => response.text(src))
+          .then((text) => {
+              this.setState({ text })
+          })
+    }
+
+    componentDidMount() {
+      if (!!this.props.activeLanguage) {
+        const ppolicyText = require("../content/privatepolicy_" + this.props.activeLanguage.code + ".md");
+        this.getContent(ppolicyText)
+      }
+    }
+
     shouldComponentUpdate(nextProps, nextState) {
         if (nextProps.activeLanguage !== this.props.activeLanguage) {
-            const overviewText = require("../content/privatepolicy_" + nextProps.activeLanguage.code + ".md");
-            fetch(overviewText)
-                .then((response) => response.text())
-                .then((text) => {
-                    this.setState({text})
-                })
+            const ppolicyText = require("../content/privatepolicy_" + nextProps.activeLanguage.code + ".md");
+            this.getContent(ppolicyText)
         }
         return true
     }

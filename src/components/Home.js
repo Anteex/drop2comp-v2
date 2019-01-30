@@ -17,7 +17,7 @@ import axios from 'axios'
 import { withLocalize } from "react-localize-redux";
 import { Translate } from "react-localize-redux";
 import textHome from "../translations/Home.json";
-
+import { Helmet } from "react-helmet";
 
 
 const HIDE = 0;
@@ -31,6 +31,7 @@ class Home extends Component {
         super(props);
         this.state = {
             clientId: this.getUniqId(),
+            title: '',
             transfering: false,
             rate: null,
             dialogFollow: false,
@@ -60,6 +61,15 @@ class Home extends Component {
 
     componentWillUnmount() {
         this.unsetDatabaseListener();
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        if (nextProps.activeLanguage !== this.props.activeLanguage || this.state.title === "") {
+          this.setState({
+            title: nextProps.translate("title")
+          })
+        }
+        return true
     }
 
     getUniqId() {
@@ -529,6 +539,9 @@ class Home extends Component {
         }
         return (
             <div className="container-fluid">
+                <Helmet>
+                  <title>{this.state.title}</title>
+                </Helmet>
                 <h1 className="text-center mt-5 d-none d-md-block">
                     <Translate id="intro1" />
                 </h1>

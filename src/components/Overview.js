@@ -13,14 +13,25 @@ class Overview extends Component {
         }
     }
 
+    getContent(src) {
+      fetch(src)
+          .then((response) => response.text(src))
+          .then((text) => {
+              this.setState({ text })
+          })
+    }
+
+    componentDidMount() {
+      if (!!this.props.activeLanguage) {
+        const overviewText = require("../content/overview_" + this.props.activeLanguage.code + ".md");
+        this.getContent(overviewText)
+      }
+    }
+
     shouldComponentUpdate(nextProps, nextState) {
         if (nextProps.activeLanguage !== this.props.activeLanguage) {
-            const overviewText = require("../content/overview_" + nextProps.activeLanguage.code + ".md");
-            fetch(overviewText)
-                .then((response) => response.text())
-                .then((text) => {
-                    this.setState({ text })
-                })
+          const overviewText = require("../content/overview_" + nextProps.activeLanguage.code + ".md");
+          this.getContent(overviewText)
         }
         return true
     }
