@@ -3,9 +3,11 @@ import { Navbar, NavbarToggler, Collapse, NavItem, NavLink, Nav } from 'reactstr
 import BrandLogo from './BrandLogo';
 import GetAppMenu from './GetAppMenu';
 import { mainMenu } from '../config';
+import { Translate } from "react-localize-redux";
+import { withLocalize } from "react-localize-redux";
 
 
-export default class NavigationBar extends Component {
+class NavigationBar extends Component {
     constructor(props) {
         super(props);
 
@@ -31,7 +33,9 @@ export default class NavigationBar extends Component {
                             <span className={item.icon + " fa sidenav-icon"} aria-hidden="true"></span>
                         </div>
                         <div className="col">
-                            <NavLink href={"/" + item.path} className="d-inline">{item.title}</NavLink>
+                            <NavLink href={"/" + item.path} className="d-inline">
+                                <Translate id={"mainMenu." + item.titleId} />
+                            </NavLink>
                         </div>
                     </div>
                 </NavItem>
@@ -51,3 +55,5 @@ export default class NavigationBar extends Component {
         )
     }
 }
+
+export default withLocalize(NavigationBar);

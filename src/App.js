@@ -10,13 +10,28 @@ import SideNav, { NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import { mainMenu } from './config'
 import ScrollToTop from './components/ScrollToTop'
+import { renderToStaticMarkup } from "react-dom/server";
+import { withLocalize } from "react-localize-redux";
+import { Translate } from "react-localize-redux";
+import globalTranslations from "./translations/global.json";
 
 
-export default class App extends Component {
+class App extends Component {
 
   constructor(props){
       super(props);
       this.menu = mainMenu;
+      this.props.initialize({
+          languages: [
+              { name: "English", code: "en" },
+              { name: "Russian", code: "ru" }
+          ],
+          translation: globalTranslations,
+          options: {
+              renderToStaticMarkup,
+              defaultLanguage: "ru"
+          }
+      });
   }
 
   render() {
@@ -27,7 +42,7 @@ export default class App extends Component {
                     <i className={item.icon + " fa sidenav-icon"} aria-hidden="true"></i>
                 </NavIcon>
                 <NavText>
-                    {item.title}
+                    <Translate id={"mainMenu." + item.titleId} />
                 </NavText>
             </NavItem>
         )
@@ -76,3 +91,5 @@ export default class App extends Component {
     );
   }
 }
+
+export default withLocalize(App);

@@ -1,0 +1,25 @@
+{
+  "intro1": [
+    "It's an easy way to share your files, documents or pictures from your phone to any PC or Mac nearby. USB cable is not required.",
+    "Простой способ передать файлы или фотографии с телефона на любой компьютер поблизости. USB кабель не нужен"
+  ],
+  "intro2": [
+    "Just select a file on your phone and tap \"share via ...\"",
+    "Выберите файл на телефоне и нажмите на \"поделиться через ...\""
+  ],
+  "choose": ["Then choose", "Затем выберите"],
+  "app": ["our app", "наше приложение"],
+  "scanwait": [
+    "Scan this QR-code and wait for download is complete",
+    "Сканируйте этот QR-код и дождитесь окончания загрузки"
+  ],
+  "partiallyCompatible": [
+    "Your browser is partially compatible with our service. We recommend using",
+    "Ваш браузер частично совместим с нашим сервисом. Мы рекомендуем использовать"
+  ],
+  "notCompatible": [
+    "Your browser is not compatible with our service. We recommend using",
+    "Ваш браузер не совместим с нашим сервисом. Мы рекомендуем использовать"
+  ]
+
+}

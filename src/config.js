@@ -15,32 +15,32 @@ export const mainMenu = [
     {
         path: "",
         icon: "fa-qrcode",
-        title: "Transfer files"
+        titleId: "transfer"
     },
     {
         path: "overview/",
         icon: "fa-question",
-        title: "Overview"
+        titleId: "overview"
     },
     {
         path: "private_policy/",
         icon: "fa-file-text-o",
-        title: "Private policy"
+        titleId: "policy"
     },
     {
         path: links.download,
         icon: "fa-download",
-        title: "Download"
+        titleId: "download"
     },
     {
         path: links.googlePlay,
         icon: "fa-mobile",
-        title: "More apps"
+        titleId: "more"
     },
     {
         path: links.facebook,
         icon: "fa-facebook-official",
-        title: "Facebook"
+        titleId: "facebook"
     }
 ]
 

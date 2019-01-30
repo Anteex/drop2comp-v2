@@ -1,0 +1,10 @@
+{
+  "mainMenu": {
+    "transfer": ["Transfer files", "Передать файлы"],
+    "overview": ["Overview", "Описание"],
+    "policy": ["Private policy", "Политика конфиденциальности"],
+    "download": ["Download", "Скачать"],
+    "more": ["More apps", "Еще приложения"],
+    "facebook": ["Facebook", "Facebook"]
+  }
+}

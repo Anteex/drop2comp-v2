@@ -6,14 +6,24 @@ import {
     DropdownItem,
     Nav } from 'reactstrap';
 import { links } from '../config'
+import { withLocalize } from "react-localize-redux";
+import { Translate } from "react-localize-redux";
+import textGetAppMenu from "../translations/GetAppMenu.json";
 
-export default class GetAppMenu extends Component {
+
+class GetAppMenu extends Component {
+
+    constructor(props) {
+        super(props);
+        this.props.addTranslation(textGetAppMenu);
+    }
+
     render() {
         return (
             <Nav className="ml-auto d-none d-md-block" navbar>
                 <UncontrolledDropdown nav inNavbar>
                     <DropdownToggle nav >
-                        Don't have drop2comp on your phone yet? Try it now!
+                        <Translate id="getApp" />
                     </DropdownToggle>
                     <DropdownMenu right>
                         <DropdownItem>
@@ -34,3 +44,5 @@ export default class GetAppMenu extends Component {
         )
     }
 }
+
+export default withLocalize(GetAppMenu);

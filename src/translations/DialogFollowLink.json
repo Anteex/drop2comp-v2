@@ -1,0 +1,12 @@
+{
+  "text": [
+    "It seems you have a web link in the transferred text:",
+    "Кажется, у вас есть веб-ссылка в переданном тексте:"
+  ],
+  "question": [
+    "Do you want to follow the link or continue transferring the file?",
+    "Вы хотите перейти по ссылке или продолжить передачу файла?"
+  ],
+  "follow": ["Follow", "Перейти"],
+  "continue": ["Continue", "Продолжить"]
+}

@@ -1,0 +1,7 @@
+{
+  "social" : ["Social networks", "Социальные сети"],
+  "googleplay" : ["Google Play", "Google Play"],
+  "facebook": ["Facebook", "Facebook"],
+  "language": ["Language", "Язык"],
+  "rights": ["All rights reserved", "Все права защищены"]
+}

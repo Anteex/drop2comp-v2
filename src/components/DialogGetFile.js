@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import {Modal, ModalBody, Button, Alert } from 'reactstrap'
 import { wellLookedMb } from '../helpers/utils'
+import { withLocalize } from "react-localize-redux";
+import { Translate } from "react-localize-redux";
+import textDialogGetFile from "../translations/DialogGetFile.json";
 
-export default class DialogGetFile extends Component {
+class DialogGetFile extends Component {
 
     constructor(props) {
         super(props);
@@ -15,6 +18,7 @@ export default class DialogGetFile extends Component {
                 avlMb: 0
             }
         };
+        this.props.addTranslation(textDialogGetFile);
         this.dropzone = React.createRef();
         this.selectFile = this.selectFile.bind(this);
         this.handleSelectFile = this.handleSelectFile.bind(this);
@@ -99,7 +103,7 @@ export default class DialogGetFile extends Component {
         if (this.state.warningMultiple) {
             warningMultiple = (
                 <Alert color="warning" className="mt-3 mb-0">
-                    We do not support a multiple files uploading
+                    <Translate id="multiple" />
                 </Alert>
             )
         }
@@ -108,10 +112,10 @@ export default class DialogGetFile extends Component {
             warningTooBigSize = (
                 <Alert color="danger" className="mt-3 mb-0">
                     <div className="text-truncate pb-1">
-                        You have not enough MB to get this file: {this.state.fileinfo.name}
+                        <Translate id="noenough" />&nbsp;{this.state.fileinfo.name}
                     </div>
-                    required: {this.state.fileinfo.reqMb} Mb<br />
-                    available: {this.state.fileinfo.avlMb} Mb
+                    <Translate id="required" />&nbsp;{this.state.fileinfo.reqMb}&nbsp;<Translate id="mb"/><br />
+                    <Translate id="available" />&nbsp;{this.state.fileinfo.avlMb}&nbsp;<Translate id="mb"/>
                 </Alert>
             )
         }
@@ -128,11 +132,11 @@ export default class DialogGetFile extends Component {
                         <div className="dropzone" ref={this.dropzone}>
                             {closeBtn}
                             <div className="row align-items-center justify-content-center h-100">
-                                <Button color="primary" size="lg" onClick={this.selectFile}>Select a file ...</Button>
+                                <Button color="primary" size="lg" onClick={this.selectFile}><Translate id="selectfile" /></Button>
                                 <input type="file" id="inputGetFile" name="files[]" className="d-none" onChange={this.handleSelectFile}/>
                             </div>
                             <div className="note w-100">
-                                <h5 className="text-center">or drop a file here ...</h5>
+                                <h5 className="text-center"><Translate id="dropfile"/></h5>
                             </div>
                         </div>
                         {warningMultiple}
@@ -143,3 +147,5 @@ export default class DialogGetFile extends Component {
         )
     }
 }
+
+export default withLocalize(DialogGetFile);

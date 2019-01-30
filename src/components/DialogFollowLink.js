@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 import {Modal, ModalBody, ModalFooter, Button } from 'reactstrap';
+import { withLocalize } from "react-localize-redux";
+import { Translate } from "react-localize-redux";
+import textDialogFollowLink from "../translations/DialogFollowLink.json";
 
-export default class DialogFollowLink extends Component {
+
+class DialogFollowLink extends Component {
+
+    constructor(props) {
+        super(props);
+        this.props.addTranslation(textDialogFollowLink);
+    }
 
     render() {
         return (
@@ -15,7 +24,7 @@ export default class DialogFollowLink extends Component {
                 >
                     <ModalBody>
                         <p>
-                            It seems you have a web link in the transferred text:
+                            <Translate id="text" />
                         </p>
                         <p className="text-truncate">
                             <a
@@ -27,7 +36,7 @@ export default class DialogFollowLink extends Component {
                             </a>
                         </p>
                         <p>
-                            Do you want to follow the link or continue transferring the file?
+                            <Translate id="question" />
                         </p>
                     </ModalBody>
                     <ModalFooter>
@@ -38,12 +47,14 @@ export default class DialogFollowLink extends Component {
                             role="button"
                             target="_blank"
                             rel="noopener noreferrer">
-                        Follow
+                        <Translate id="follow" />
                         </a>
-                        <Button color="secondary" onClick={this.props.onContinue}>Continue</Button>
+                        <Button color="secondary" onClick={this.props.onContinue}><Translate id="continue"/></Button>
                     </ModalFooter>
                 </Modal>
             </div>
         )
     }
 }
+
+export default withLocalize(DialogFollowLink);

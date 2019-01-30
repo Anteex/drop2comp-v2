@@ -1,24 +1,28 @@
 import React, { Component } from 'react';
 import ReactMarkdown from 'react-markdown'
-import overviewText from "../content/privatepolicy.md"
 import LoadingBar from './LoadingBar'
+import { withLocalize } from "react-localize-redux";
 
 
-export default class PrivatePolicy extends Component {
+class PrivatePolicy extends Component {
 
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             text: null
         }
     }
 
-    componentWillMount() {
-        fetch(overviewText)
-            .then((response) => response.text())
-            .then((text) => {
-                this.setState({ text })
-            })
+    shouldComponentUpdate(nextProps, nextState) {
+        if (nextProps.activeLanguage !== this.props.activeLanguage) {
+            const overviewText = require("../content/privatepolicy_" + nextProps.activeLanguage.code + ".md");
+            fetch(overviewText)
+                .then((response) => response.text())
+                .then((text) => {
+                    this.setState({text})
+                })
+        }
+        return true
     }
 
     render() {
@@ -43,3 +47,5 @@ export default class PrivatePolicy extends Component {
         )
     }
 }
+
+export default withLocalize(PrivatePolicy);

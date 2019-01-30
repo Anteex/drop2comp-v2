@@ -4,12 +4,15 @@ import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from "react-router-dom";
+import { LocalizeProvider } from "react-localize-redux";
 
 
 ReactDOM.render(
-    <BrowserRouter>
-        <App />
-    </BrowserRouter>
+    <LocalizeProvider>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+    </LocalizeProvider>
     , document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

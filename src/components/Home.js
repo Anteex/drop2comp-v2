@@ -14,6 +14,10 @@ import { partiallyCompatibleBrowser, unCompatibleBrowser } from '../helpers/unco
 import $ from 'jquery'
 import downloadFile from '../helpers/downloadFile'
 import axios from 'axios'
+import { withLocalize } from "react-localize-redux";
+import { Translate } from "react-localize-redux";
+import textHome from "../translations/Home.json";
+
 
 
 const HIDE = 0;
@@ -21,7 +25,7 @@ const SHOW = 1;
 const WAIT = 2;
 const LOADING = 3;
 
-export default class Home extends Component {
+class Home extends Component {
 
     constructor(props) {
         super(props);
@@ -34,7 +38,8 @@ export default class Home extends Component {
             dialogMessage: false,
             message: '',
             dialogGetFile: false
-        }
+        };
+        this.props.addTranslation(textHome);
         this.setIdle = this.setIdle.bind(this);
         this.abortLocalDownload = this.abortLocalDownload.bind(this);
         this.updateDatabaseListener = this.updateDatabaseListener.bind(this);
@@ -252,7 +257,7 @@ export default class Home extends Component {
     startLocalUpload(file) {
         console.log("Upload locally");
         this.dialogDownloading(LOADING, 0);
-        console.time("LocalUpload")
+        console.time("LocalUpload");
         let url = config.localProtocol + '://' + this.address + ":" + config.localPort + "/" + this.state.clientId;
         let context = this;
 
@@ -501,7 +506,7 @@ export default class Home extends Component {
             if (partiallyCompatibleBrowser()) {
                 browserwarning = (
                     <Alert color="warning" className="text-center">
-                        Your browser is partially compatible with our service. We recommend using <a href="https://chrome.google.com" target="_blank" rel="noopener noreferrer">Google Chrome</a>
+                        <Translate id="partiallyCompatible" />&nbsp;<a href="https://chrome.google.com" target="_blank" rel="noopener noreferrer">Google Chrome</a>
                     </Alert>
                 )
             }
@@ -514,7 +519,7 @@ export default class Home extends Component {
             qrcode = (
                 <div>
                     <Alert color="danger" className="text-center">
-                        Your browser is not compatible with our service. We recommend using <a href="https://chrome.google.com" target="_blank" rel="noopener noreferrer">Google Chrome</a>
+                        <Translate id="notCompatible" />&nbsp;<a href="https://chrome.google.com" target="_blank" rel="noopener noreferrer">Google Chrome</a>
                     </Alert>
                     <div className="text-center py-5">
                         <img src="/images/no-qrcode.png" alt="no qr-code"/>
@@ -525,16 +530,17 @@ export default class Home extends Component {
         return (
             <div className="container-fluid">
                 <h1 className="text-center mt-5 d-none d-md-block">
-                    It's an easy way to share your files, documents or pictures from your phone to any PC or Mac nearby. USB cable is not required.
+                    <Translate id="intro1" />
                 </h1>
                 <h3 className="text-center my-4">
-                    Just select a file on your phone and tap "share via ...".
-                    Then choose <a href={links.download}>our app</a>
+                    <Translate id="intro2" /><br />
+                    <Translate id="choose" />&nbsp;
+                    <a href={links.download}><Translate id="app" /></a>
                 </h3>
                 {browserwarning}
                 {qrcode}
                 <h3 className="text-center my-4">
-                    Scan this QR-code and wait for download is complete
+                    <Translate id="scanwait" />
                 </h3>
                 <DialogDownloading isOpen={this.state.transfering} rate={this.state.rate} />
                 <DialogFollowLink isOpen={this.state.dialogFollow} linkfollow={this.state.linkfollow} onContinue={this.continueDownload} onFollow={this.stopDownload}/>
@@ -544,3 +550,5 @@ export default class Home extends Component {
         )
     }
 }
+
+export default withLocalize(Home);

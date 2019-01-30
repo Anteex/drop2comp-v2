@@ -1,0 +1,16 @@
+{
+  "selectfile": ["Select a file ...", "Выберите файл ..."],
+  "dropfile": ["or drop a file here ...", "или перетащите файл сюда ..."],
+  "multiple": [
+    "We do not support a multiple files uploading",
+    "Нельзя выбрать несколько файлов для загрузки"
+  ],
+  "noenough": [
+    "You have not enough MB to get this file:",
+    "У вас недостаточно МБ для получения этого файла"
+  ],
+  "required": ["required:", "требуется:"],
+  "available": ["available:", "доступно:"],
+  "mb": ["Mb", "Мб"]
+
+}

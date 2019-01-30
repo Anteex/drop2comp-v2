@@ -1,45 +1,54 @@
 import React, { Component } from 'react';
 import { links } from '../config';
+import { withLocalize } from "react-localize-redux";
+import { Translate } from "react-localize-redux";
+import textFooterBar from "../translations/FooterBar.json";
 
 
-export default class FooterBar extends Component {
+
+class FooterBar extends Component {
+    constructor(props) {
+        super(props);
+        this.props.addTranslation(textFooterBar);
+    }
+
     render() {
         const today = new Date();
+        const langList = this.props.languages.map(lang => {
+            return (
+                <p key={lang.code}>
+                    <span className="footer text-uppercase" onClick={() => this.props.setActiveLanguage(lang.code)}>
+                        {lang.code}
+                    </span>
+                </p>
+                )
+        });
         return (
             <footer>
                 <div className="container">
                     <div className="row">
                         <div className="col-sm-6 col-md-3 pb-5">
-                            <h6 className="text-uppercase"><b>Social networks</b></h6>
-                            <p className="pt-3">
+                            <h6 className="text-uppercase"><b>&copy;{today.getFullYear()} <Translate id="rights"/></b></h6>
+                        </div>
+                        <div className="col-sm-6 col-md-3"></div>
+                        <div className="col-sm-6 col-md-3 pb-5">
+                            <h6 className="text-uppercase pb-3"><b><Translate id="social"/></b></h6>
+                            <p>
                                 <a href={links.googlePlay} className="footer" target="_blank" rel="noopener noreferrer">
                                     <i className="fa fa-play" aria-hidden="true"></i>
-                                    Google Play
+                                    <Translate id="googleplay"/>
                                 </a>
                             </p>
                             <p>
                                 <a href={links.facebook} className="footer" target="_blank" rel="noopener noreferrer">
                                     <i className="fa fa-facebook-official" aria-hidden="true"></i>
-                                    Facebook
+                                    <Translate id="facebook"/>
                                 </a>
                             </p>
                         </div>
                         <div className="col-sm-6 col-md-3 pb-5">
-                            <h6 className="text-uppercase"><b>Language</b></h6>
-                            <p className="pt-3">
-                                <span className="footer" >
-                                    EN
-                                </span>
-                            </p>
-                            <p>
-                                <span className="footer" >
-                                    RU
-                                </span>
-                            </p>
-                        </div>
-                        <div className="col-sm-6 col-md-3"></div>
-                        <div className="col-sm-6 col-md-3 pb-5">
-                            <h6 className="text-uppercase"><b>&copy;{today.getFullYear()} All rights reserved</b></h6>
+                            <h6 className="text-uppercase pb-3"><b><Translate id="language"/></b></h6>
+                            {langList}
                         </div>
                     </div>
                 </div>
@@ -47,3 +56,5 @@ export default class FooterBar extends Component {
         )
     }
 }
+
+export default withLocalize(FooterBar);
