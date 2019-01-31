@@ -3,13 +3,20 @@ import { links } from '../config';
 import { withLocalize } from "react-localize-redux";
 import { Translate } from "react-localize-redux";
 import textFooterBar from "../translations/FooterBar.json";
-
+import { Helmet } from "react-helmet";
 
 
 class FooterBar extends Component {
+
     constructor(props) {
         super(props);
         this.props.addTranslation(textFooterBar);
+        this.setLanguage = this.setLanguage.bind(this);
+    }
+
+    setLanguage(lang) {
+        this.props.setActiveLanguage(lang);
+        localStorage.setItem('lang', lang)
     }
 
     render() {
@@ -17,14 +24,23 @@ class FooterBar extends Component {
         const langList = this.props.languages.map(lang => {
             return (
                 <p key={lang.code}>
-                    <span className="footer text-uppercase" onClick={() => this.props.setActiveLanguage(lang.code)}>
+                    <span className="footer text-uppercase" onClick={() => this.setLanguage(lang.code)}>
                         {lang.code}
                     </span>
                 </p>
                 )
         });
+        let helmet = "";
+        if (!!this.props.activeLanguage) {
+            helmet = (
+                <Helmet>
+                    <html lang={this.props.activeLanguage.code} />
+                </Helmet>
+            )
+        }
         return (
             <footer>
+                {helmet}
                 <div className="container">
                     <div className="row">
                         <div className="col-sm-6 col-md-3 pb-5">

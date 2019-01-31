@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import ReactMarkdown from 'react-markdown'
 import LoadingBar from './LoadingBar'
 import { withLocalize } from "react-localize-redux";
+import textPrivatePolicy from "../translations/PrivatePolicy.json";
+import { Helmet } from "react-helmet";
 
 
 class PrivatePolicy extends Component {
@@ -9,8 +11,10 @@ class PrivatePolicy extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            text: null
+            text: null,
+            title: ''
         }
+        this.props.addTranslation(textPrivatePolicy);
     }
 
     getContent(src) {
@@ -33,6 +37,11 @@ class PrivatePolicy extends Component {
             const ppolicyText = require("../content/privatepolicy_" + nextProps.activeLanguage.code + ".md");
             this.getContent(ppolicyText)
         }
+        if (nextProps.activeLanguage !== this.props.activeLanguage || this.state.title === "") {
+            this.setState({
+                title: nextProps.translate("title")
+            })
+        }
         return true
     }
 
@@ -53,6 +62,9 @@ class PrivatePolicy extends Component {
         }
         return (
             <div>
+                <Helmet>
+                    <title>{this.state.title}</title>
+                </Helmet>
                 {content}
             </div>
         )

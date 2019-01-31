@@ -1,0 +1,9 @@
+{
+  "title": ["Page not found", "Страница не найдена"],
+  "notfound": ["404 Not Found", "404 не найдено"],
+  "message": [
+    "Would you like to send or receive files from your Android to any PC?",
+    "Желаете получить или передать файлы с вашего телефона на компьютер?"
+  ],
+  "findout": ["Find out here!", "Узнайте здесь!"]
+}

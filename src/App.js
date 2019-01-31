@@ -29,7 +29,7 @@ class App extends Component {
           translation: globalTranslations,
           options: {
               renderToStaticMarkup,
-              defaultLanguage: "ru"
+              defaultLanguage: localStorage.getItem("lang") || "en"
           }
       });
   }
@@ -77,7 +77,7 @@ class App extends Component {
                                   <Route exact path="/" component={Home} />
                                   <Route path="/overview/" component={Overview} />
                                   <Route path="/private_policy/" component={PrivatePolicy} />
-                                  <Route component={Page404} />
+                                  <Route component={Page404} status={404} />
                               </Switch>
                           </div>
                           <FooterBar />

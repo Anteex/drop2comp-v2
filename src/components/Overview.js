@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import ReactMarkdown from 'react-markdown'
 import LoadingBar from './LoadingBar'
 import { withLocalize } from "react-localize-redux";
+import textOverview from "../translations/Overview.json";
+import { Helmet } from "react-helmet";
 
 
 class Overview extends Component {
@@ -9,8 +11,10 @@ class Overview extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            text: null
-        }
+            text: null,
+            title: ''
+        };
+        this.props.addTranslation(textOverview);
     }
 
     getContent(src) {
@@ -33,6 +37,11 @@ class Overview extends Component {
           const overviewText = require("../content/overview_" + nextProps.activeLanguage.code + ".md");
           this.getContent(overviewText)
         }
+        if (nextProps.activeLanguage !== this.props.activeLanguage || this.state.title === "") {
+            this.setState({
+                title: nextProps.translate("title")
+            })
+        }
         return true
     }
 
@@ -53,6 +62,9 @@ class Overview extends Component {
         }
         return (
             <div>
+                <Helmet>
+                    <title>{this.state.title}</title>
+                </Helmet>
                 {content}
             </div>
         )
