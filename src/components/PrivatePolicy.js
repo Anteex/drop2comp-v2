@@ -55,7 +55,7 @@ class PrivatePolicy extends Component {
             content = (
                 <div className="row justify-content-center">
                     <div className="col-md-10">
-                        <ReactMarkdown className="privatepolicy" source={this.state.text} />
+                        <ReactMarkdown className="privatepolicy px-3" source={this.state.text} />
                     </div>
                 </div>
             )

@@ -8,17 +8,18 @@ import PrivatePolicy from './components/PrivatePolicy';
 import Page404 from './components/Page404';
 import SideNav, { NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
-import { mainMenu } from './config'
+import { mainMenu, google } from './config'
 import ScrollToTop from './components/ScrollToTop'
 import { renderToStaticMarkup } from "react-dom/server";
 import { withLocalize } from "react-localize-redux";
 import { Translate } from "react-localize-redux";
 import globalTranslations from "./translations/global.json";
+import ReactGA from 'react-ga';
 
 
 class App extends Component {
 
-  constructor(props){
+  constructor(props) {
       super(props);
       this.menu = mainMenu;
       this.props.initialize({
@@ -32,6 +33,11 @@ class App extends Component {
               defaultLanguage: localStorage.getItem("lang") || "en"
           }
       });
+      console.log("MODE: " + process.env.NODE_ENV);
+      if (!process.env.NODE_ENV || process.env.NODE_ENV === 'production') {
+        ReactGA.initialize(google.ga);
+        ReactGA.pageview(window.location.pathname + window.location.search);
+      }
   }
 
   render() {
@@ -60,6 +66,9 @@ class App extends Component {
                                   const to = '/' + selected;
                                   if (location.pathname !== to) {
                                       history.push(to);
+                                  }
+                                  if (!process.env.NODE_ENV || process.env.NODE_ENV === 'production') {
+                                    ReactGA.pageview(window.location.pathname + window.location.search);
                                   }
                               }
                           }}

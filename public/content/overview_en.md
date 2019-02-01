@@ -3,7 +3,7 @@ Overview
 
 It's an easy way to share your files, documents or pictures from your phone to any PC or Mac. Data cable is not required. You need just internet connection and WiFi.
 
-* Simple and ease, just scan QR-code via app
+* Simple and easy, just scan QR-code via app
 * Send and receive files, documents, pictures
 * Once installed app - transfer files to anyone
 * No USB cable

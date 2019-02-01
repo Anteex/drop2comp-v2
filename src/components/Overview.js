@@ -55,7 +55,7 @@ class Overview extends Component {
             content = (
                 <div className="row justify-content-center">
                     <div className="col-md-9">
-                        <ReactMarkdown className="overview" source={this.state.text} />
+                        <ReactMarkdown className="overview px-3" source={this.state.text} />
                     </div>
                 </div>
             )

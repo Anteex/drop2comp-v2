@@ -5,6 +5,7 @@ import GetAppMenu from './GetAppMenu';
 import { mainMenu } from '../config';
 import { Translate } from "react-localize-redux";
 import { withLocalize } from "react-localize-redux";
+import { LinkContainer } from "react-router-bootstrap";
 
 
 class NavigationBar extends Component {
@@ -33,9 +34,15 @@ class NavigationBar extends Component {
                             <span className={item.icon + " fa sidenav-icon"} aria-hidden="true"></span>
                         </div>
                         <div className="col">
-                            <NavLink href={"/" + item.path} className="d-inline">
-                                <Translate id={"mainMenu." + item.titleId} />
-                            </NavLink>
+                            { !item.path.startsWith("http")
+                            ? <LinkContainer to={"/" + item.path} exact={true} >
+                                  <NavLink className="d-inline">
+                                      <Translate id={"mainMenu." + item.titleId} />
+                                  </NavLink>
+                              </LinkContainer>
+                            : <NavLink href={item.path} className="d-inline">
+                                  <Translate id={"mainMenu." + item.titleId} />
+                              </NavLink> }
                         </div>
                     </div>
                 </NavItem>

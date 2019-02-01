@@ -11,6 +11,10 @@ export const links = {
     download: "https://play.google.com/store/apps/details?id=com.drop2comp&utm_source=drop2comp"
 }
 
+export const google = {
+    ga: "UA-82820070-2"
+}
+
 export const mainMenu = [
     {
         path: "",
@@ -50,5 +54,3 @@ export const firebaseConfig = {
     databaseURL: "https://drop2comp.firebaseio.com/",
     storageBucket: "gs://drop2comp.appspot.com/"
 };
-
-
