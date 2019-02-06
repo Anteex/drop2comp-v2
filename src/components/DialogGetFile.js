@@ -4,25 +4,31 @@ import { wellLookedMb } from '../helpers/utils'
 import { withLocalize } from "react-localize-redux";
 import { Translate } from "react-localize-redux";
 import textDialogGetFile from "../translations/DialogGetFile.json";
+import Uploading from "./Uploading"
+
 
 class DialogGetFile extends Component {
 
     constructor(props) {
         super(props);
+
         this.state = {
-            warningMultiple: false,
-            warningTooBigSize: false,
             fileinfo : {
                 name : '',
                 reqMb: 0,
                 avlMb: 0
-            }
+            },
+            queryFiles: []
         };
+
         this.props.addTranslation(textDialogGetFile);
+
         this.dropzone = React.createRef();
+
         this.selectFile = this.selectFile.bind(this);
         this.handleSelectFile = this.handleSelectFile.bind(this);
         this.handleDropFile = this.handleDropFile.bind(this);
+        this.handleRemoveItem = this.handleRemoveItem.bind(this);
     }
 
     componentDidUpdate() {
@@ -40,10 +46,6 @@ class DialogGetFile extends Component {
 
 
     selectFile() {
-        this.setState({
-            warningMultiple: false,
-            warningTooBigSize: false
-        });
         document.getElementById("inputGetFile").click();
     }
 
@@ -63,34 +65,37 @@ class DialogGetFile extends Component {
         }
     }
 
-    handleSelectFile(evt) {
+    appendQueryFiles(files){
+        let queryFiles = this.state.queryFiles;
+        for (let i=0; i < files.length; i++) {
+            queryFiles.push({
+                file: files[i],
+                rate: 0,
+                waiting: true
+            })
+        }
         this.setState({
-            warningMultiple: false,
-            warningTooBigSize: false
+            queryFiles
         })
-        let file = evt.target.files[0];
-        if (!this.checkFileSize(file)) return;
+    }
+
+    handleSelectFile(evt) {
+        this.appendQueryFiles(evt.target.files);
         document.getElementById('inputGetFile').value ="";
-        this.props.onSelectFile(file);
     }
 
     handleDropFile(evt) {
         evt.stopPropagation();
         evt.preventDefault();
-        if (evt.dataTransfer.files[0].size === 0 || evt.dataTransfer.files.length !== 1) {
-            this.setState({
-                warningMultiple: true
-            });
-            return
-        } else {
-            this.setState({
-                warningMultiple: false,
-                warningTooBigSize: false
-            })
-        }
-        let file = evt.dataTransfer.files[0];
-        if (!this.checkFileSize(file)) return;
-        this.props.onSelectFile(file);
+        this.appendQueryFiles(evt.dataTransfer.files);
+    }
+
+    handleRemoveItem(key) {
+        let queryFiles = this.state.queryFiles;
+        queryFiles.splice(key, 1);
+        this.setState({
+            queryFiles
+        })
     }
 
     render() {
@@ -99,14 +104,6 @@ class DialogGetFile extends Component {
                 <i className="fa fa-times"></i>
             </button>
         );
-        let warningMultiple = "";
-        if (this.state.warningMultiple) {
-            warningMultiple = (
-                <Alert color="warning" className="mt-3 mb-0">
-                    <Translate id="multiple" />
-                </Alert>
-            )
-        }
         let warningTooBigSize = "";
         if (this.state.warningTooBigSize) {
             warningTooBigSize = (
@@ -119,7 +116,11 @@ class DialogGetFile extends Component {
                 </Alert>
             )
         }
-
+        const uploadingFiles = this.state.queryFiles.map((item, key) => {
+            return (
+                <Uploading file={item.file} filename={item.file.name} key={key} itemIndex={key} rate={item.rate} waiting={item.waiting} handleClose={this.handleRemoveItem}/>
+            )
+        });
         return (
             <div>
                 <Modal
@@ -133,14 +134,16 @@ class DialogGetFile extends Component {
                             {closeBtn}
                             <div className="row align-items-center justify-content-center h-100">
                                 <Button color="primary" size="lg" onClick={this.selectFile}><Translate id="selectfile" /></Button>
-                                <input type="file" id="inputGetFile" name="files[]" className="d-none" onChange={this.handleSelectFile}/>
+                                <input type="file" id="inputGetFile" name="files[]" className="d-none" onChange={this.handleSelectFile} multiple/>
                             </div>
                             <div className="note w-100">
                                 <h5 className="text-center"><Translate id="dropfile"/></h5>
                             </div>
                         </div>
-                        {warningMultiple}
                         {warningTooBigSize}
+                        <div className="row">
+                            {uploadingFiles}
+                        </div>
                     </ModalBody>
                 </Modal>
             </div>

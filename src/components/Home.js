@@ -40,7 +40,9 @@ class Home extends Component {
             message: '',
             dialogGetFile: false
         };
+
         this.props.addTranslation(textHome);
+
         this.setIdle = this.setIdle.bind(this);
         this.abortLocalDownload = this.abortLocalDownload.bind(this);
         this.updateDatabaseListener = this.updateDatabaseListener.bind(this);
@@ -509,6 +511,10 @@ class Home extends Component {
         }
     }
 
+    test() {
+        this.dialogGetFile(SHOW);
+    }
+
     render() {
         let browserwarning = "";
         let qrcode = "";
@@ -539,6 +545,7 @@ class Home extends Component {
         }
         return (
             <div className="container-fluid">
+                <button onClick={this.test.bind(this)}>Test</button>
                 <Helmet>
                   <title>{this.state.title}</title>
                 </Helmet>
