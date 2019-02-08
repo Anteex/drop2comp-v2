@@ -30,6 +30,7 @@ class App extends Component {
           translation: globalTranslations,
           options: {
               renderToStaticMarkup,
+              renderInnerHtml: true,
               defaultLanguage: localStorage.getItem("lang") || "en"
           }
       });

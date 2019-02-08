@@ -38,7 +38,8 @@ class Home extends Component {
             linkfollow: '',
             dialogMessage: false,
             message: '',
-            dialogGetFile: false
+            dialogGetFile: false,
+            maxFileSize: 0
         };
 
         this.props.addTranslation(textHome);
@@ -231,7 +232,9 @@ class Home extends Component {
         this.dialogGetFile(HIDE);
         this.address = '';
         this.remoteAvailable = false;
-        this.maxFileSize = 0;
+        this.setState({
+            maxFileSize: 0
+        });
         firebase.database().ref('links/' + this.state.clientId + '/client' ).set({
             geturl: "cancel"
         });
@@ -305,7 +308,7 @@ class Home extends Component {
 
     startRemoteUpload(file) {
         if (this.remoteAvailable) {
-            if (file.size < (this.maxFileSize * 1024)) {
+            if (file.size < (this.state.maxFileSize * 1024)) {
                 console.log("Upload remotely");
                 this.dialogDownloading(LOADING, 0);
                 let storageRef = firebase.storage().ref();
@@ -423,9 +426,11 @@ class Home extends Component {
                 this.dialogGetFile(SHOW);
                 this.address = ip;
                 this.remoteAvailable = snapshot.val().client.remote === "enable";
-                this.maxFileSize = snapshot.val().client.getmax;
+                this.setState({
+                    maxFileSize: snapshot.val().client.getmax
+                });
                 console.log("IP: " + this.address);
-                console.log("MaxFileSize: " + this.maxFileSize);
+                console.log("MaxFileSize: " + this.state.maxFileSize);
                 return
             }
 
@@ -564,8 +569,8 @@ class Home extends Component {
                 </h3>
                 <DialogDownloading isOpen={this.state.transfering} rate={this.state.rate} />
                 <DialogFollowLink isOpen={this.state.dialogFollow} linkfollow={this.state.linkfollow} onContinue={this.continueDownload} onFollow={this.stopDownload}/>
-                <DialogMessage isOpen={this.state.dialogMessage} message={this.state.message} onOkClick={this.setIdle}/>
-                <DialogGetFile isOpen={this.state.dialogGetFile} maxFileSize={this.maxFileSize} onSelectFile={this.startUploadFile} onCancelSelect={this.abortSelectFile}/>
+                <DialogMessage isOpen={this.state.dialogMessage} message={this.state.message} onSecondaryClick={this.setIdle} secondaryButton="OK"/>
+                <DialogGetFile isOpen={this.state.dialogGetFile} maxFileSize={this.state.maxFileSize} onSelectFile={this.startUploadFile} onCancelSelect={this.abortSelectFile}/>
             </div>
         )
     }

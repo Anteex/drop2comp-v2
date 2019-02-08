@@ -4,6 +4,16 @@ import {Modal, ModalBody, ModalFooter, Button } from 'reactstrap';
 export default class DialogMessage extends Component {
 
     render() {
+        const primary = ( !!this.props.onPrimaryClick
+            ? (
+              <Button color="primary" onClick={this.props.onPrimaryClick}>{this.props.primaryButton}</Button>
+            )
+            : null );
+        const secondary = ( !!this.props.onSecondaryClick
+            ? (
+              <Button color="secondary" onClick={this.props.onSecondaryClick}>{this.props.secondaryButton}</Button>
+            )
+            : null );
         return (
             <div>
                 <Modal
@@ -19,7 +29,8 @@ export default class DialogMessage extends Component {
                         </p>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="secondary" onClick={this.props.onOkClick}>OK</Button>
+                        {primary}
+                        {secondary}
                     </ModalFooter>
                 </Modal>
             </div>
