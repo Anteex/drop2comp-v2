@@ -31,11 +31,11 @@ class Uploading extends Component {
     }
 
     render() {
-        const progress = ( !this.props.waiting
-            ? <Progress animated value={this.props.rate}>{this.props.rate}%</Progress>
+        const progress = ( !this.props.queryItem.waiting
+            ? <Progress animated value={this.props.queryItem.rate}>{this.props.queryItem.rate}%</Progress>
             : ""
         );
-        const close = ( this.props.waiting
+        const close = ( this.props.queryItem.waiting
             ? (
                     <button className="close text-danger" onClick={this.handleClose}>
                         <i className="fa fa-times"></i>
@@ -43,7 +43,7 @@ class Uploading extends Component {
               )
             : ""
         )
-        const columns = ( this.props.waiting
+        const columns = ( this.props.queryItem.waiting
             ? "col-md-6"
             : ""
         )
@@ -52,11 +52,15 @@ class Uploading extends Component {
             : "fadeOut"
         )
         const text = ( this.state.show
-            ? this.props.filename
+            ? this.props.queryItem.file.name
             : this.props.translate("skipped")
         )
+        const bg = ( this.props.queryItem.skip
+            ? "bg-warning"
+            : ""
+        )
         return (
-            <div className={"py-1 col-12 " + columns + " "  + fade}>
+            <div className={"py-1 col-12 " + columns + " "  + fade + " " + bg}>
                 {close}
                 <div className="text-truncate">
                     <small>

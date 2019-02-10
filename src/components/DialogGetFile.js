@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Modal, ModalBody, Button, Alert, Collapse } from 'reactstrap'
 import { wellLookedMb, bytesToRoundKB } from '../helpers/utils'
+import { processUpload } from '../helpers/upload'
 import { withLocalize } from "react-localize-redux";
 import { Translate } from "react-localize-redux";
 import textDialogGetFile from "../translations/DialogGetFile.json";
@@ -48,13 +49,17 @@ class DialogGetFile extends Component {
             this.dropzone.current.addEventListener('dragover', this.handleDragOver, false);
             this.dropzone.current.addEventListener('drop', this.handleDropFile, false);
         }
+        this.processQueryFiles();
     }
 
     shouldComponentUpdate(nextProps, nextState) {
         if (nextState.queryFiles.length !== this.state.queryFiles.length) {
-            this.checkFilesSize(nextState.queryFiles)
+            this.checkFilesSize(nextState.queryFiles);
+            if (nextState.queryFiles.length > 0) {
+                this.processQueryFiles()
+            }
         }
-        return true;
+        return true
     }
 
     handleDragOver(evt) {
@@ -108,6 +113,49 @@ class DialogGetFile extends Component {
         this.setState({
             queryFiles
         })
+    }
+
+    setSkipInQueryFiles(key) {
+        if (!this.state.queryFiles[key].skip) {
+            let queryFiles = [...this.state.queryFiles];
+            queryFiles[key].skip = true;
+            this.setState({
+                queryFiles
+            })
+        }
+    }
+
+    setRateInQueryFiles(key, rate) {
+        let queryFiles = [...this.state.queryFiles];
+        queryFiles[key].waiting = false;
+        queryFiles[key].rate = rate;
+        this.setState({
+            queryFiles
+        })
+    }
+
+    processQueryFiles() {
+        if (this.state.queryFiles.length > 0) {
+            const setRate = (rate) => {
+                this.setRateInQueryFiles(i, rate)
+            }
+
+            let i = 0;
+            while (i < this.state.queryFiles.length && this.state.queryFiles[i].file.size > this.props.maxFileSize * 1024) {
+                this.setSkipInQueryFiles(i);
+                i++
+            }
+            if (i < this.state.queryFiles.length && this.state.queryFiles[i].waiting) {
+                setRate(0);
+                processUpload(this.state.queryFiles[i].file, setRate)
+                    .then( result => {
+                        this.removeFromQueryFiles(i);
+                    })
+                    .catch( error => {
+                        this.setSkipInQueryFiles(i)
+                    })
+            }
+        }
     }
 
 
@@ -185,7 +233,7 @@ class DialogGetFile extends Component {
         );
         const warningTooBigSize = (
             <Collapse isOpen={this.state.warningTooBigSize}>
-                <Alert color="danger" className="mt-2 mb-0">
+                <Alert color="danger" className="mt-2 mb-2">
                     <div className="text-truncate pb-1">
                         <Translate id="noenough" />
                     </div>
@@ -202,7 +250,7 @@ class DialogGetFile extends Component {
         )
         const uploadingFiles = this.state.queryFiles.map((item, key) => {
             return (
-                <Uploading file={item.file} filename={item.file.name} key={md5(item.file.name).toString()} itemIndex={key} rate={item.rate} waiting={item.waiting} handleClose={this.removeFromQueryFiles} handleSkip={this.handleSkipItem}/>
+                <Uploading queryItem={item} key={md5(item.file.name).toString()} itemIndex={key} handleClose={this.removeFromQueryFiles} handleSkip={this.handleSkipItem}/>
             )
         });
         return (
