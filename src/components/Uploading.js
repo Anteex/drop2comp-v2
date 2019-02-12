@@ -26,7 +26,7 @@ class Uploading extends Component {
       this.setState({
         show: false
       })
-      this.props.handleSkip(this.props.itemIndex)
+      this.props.handleDelete(this.props.itemIndex)
       setTimeout(this.deleteItem, 500)
     }
 

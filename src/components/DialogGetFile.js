@@ -37,7 +37,7 @@ class DialogGetFile extends Component {
         this.handleSelectFile = this.handleSelectFile.bind(this);
         this.handleDropFile = this.handleDropFile.bind(this);
         this.removeFromQueryFiles = this.removeFromQueryFiles.bind(this);
-        this.handleSkipItem = this.handleSkipItem.bind(this);
+        this.handleDeletingItem = this.handleDeletingItem.bind(this);
         this.onCancelSelect = this.onCancelSelect.bind(this);
         this.onYesClick = this.onYesClick.bind(this);
         this.onNoClick = this.onNoClick.bind(this);
@@ -76,13 +76,13 @@ class DialogGetFile extends Component {
         const currentFileSize = queryFiles.reduce((sum, item) => {
           return sum + bytesToRoundKB(item.file.size)
         }, 0);
-        console.log("Current files size: " + currentFileSize + ". Maximum: " + this.props.maxFileSize);
-        if (currentFileSize > this.props.maxFileSize) {
+        console.log("Current files size: " + currentFileSize + ". Maximum: " + this.props.uploadState.maxFileSize);
+        if (currentFileSize > this.props.uploadState.maxFileSize) {
             this.setState({
                 warningTooBigSize: true,
                 filesInfo: {
                     reqMb: wellLookedMb(currentFileSize * 1024),
-                    avlMb: wellLookedMb(this.props.maxFileSize * 1024)
+                    avlMb: wellLookedMb(this.props.uploadState.maxFileSize * 1024)
                 }
             });
         } else {
@@ -99,7 +99,8 @@ class DialogGetFile extends Component {
                 file: files[i],
                 rate: 0,
                 waiting: true,
-                skip: false
+                skip: false,
+                deleting: false
             })
         }
         this.setState({
@@ -116,7 +117,7 @@ class DialogGetFile extends Component {
     }
 
     setSkipInQueryFiles(key) {
-        if (!this.state.queryFiles[key].skip) {
+        if (!this.state.queryFiles[key].skip && !this.state.queryFiles[key].deleting) {
             let queryFiles = [...this.state.queryFiles];
             queryFiles[key].skip = true;
             this.setState({
@@ -141,13 +142,13 @@ class DialogGetFile extends Component {
             }
 
             let i = 0;
-            while (i < this.state.queryFiles.length && this.state.queryFiles[i].file.size > this.props.maxFileSize * 1024) {
+            while (i < this.state.queryFiles.length && this.state.queryFiles[i].file.size > this.props.uploadState.maxFileSize * 1024) {
                 this.setSkipInQueryFiles(i);
                 i++
             }
-            if (i < this.state.queryFiles.length && this.state.queryFiles[i].waiting) {
+            if (i < this.state.queryFiles.length && this.state.queryFiles[i].waiting && !this.state.queryFiles[i].skip && !this.state.queryFiles[i].deleting) {
                 setRate(0);
-                processUpload(this.state.queryFiles[i].file, setRate)
+                processUpload(this.state.queryFiles[i].file, setRate, this.props.uploadState, this.props.clientId)
                     .then( result => {
                         this.removeFromQueryFiles(i);
                     })
@@ -170,9 +171,9 @@ class DialogGetFile extends Component {
         this.appendToQueryFiles(evt.dataTransfer.files);
     }
 
-    handleSkipItem(key) {
+    handleDeletingItem(key) {
       let queryFiles = [...this.state.queryFiles];
-      queryFiles[key].skip = true;
+      queryFiles[key].deleting = true;
       this.setState({
         queryFiles
       })
@@ -250,7 +251,7 @@ class DialogGetFile extends Component {
         )
         const uploadingFiles = this.state.queryFiles.map((item, key) => {
             return (
-                <Uploading queryItem={item} key={md5(item.file.name).toString()} itemIndex={key} handleClose={this.removeFromQueryFiles} handleSkip={this.handleSkipItem}/>
+                <Uploading queryItem={item} key={md5(item.file.name).toString()} itemIndex={key} handleClose={this.removeFromQueryFiles} handleDelete={this.handleDeletingItem}/>
             )
         });
         return (

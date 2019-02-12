@@ -13,7 +13,6 @@ import { Alert } from 'reactstrap'
 import { partiallyCompatibleBrowser, unCompatibleBrowser } from '../helpers/uncompatibleBrowser'
 import $ from 'jquery'
 import downloadFile from '../helpers/downloadFile'
-import axios from 'axios'
 import { withLocalize } from "react-localize-redux";
 import { Translate } from "react-localize-redux";
 import textHome from "../translations/Home.json";
@@ -39,7 +38,12 @@ class Home extends Component {
             dialogMessage: false,
             message: '',
             dialogGetFile: false,
-            maxFileSize: 0
+            upload: {
+                maxFileSize: 0,
+                remoteAvailable: false,
+                remoteMaxSize: 0,
+                address: ''
+            }
         };
 
         this.props.addTranslation(textHome);
@@ -49,9 +53,6 @@ class Home extends Component {
         this.updateDatabaseListener = this.updateDatabaseListener.bind(this);
         this.continueDownload = this.continueDownload.bind(this);
         this.stopDownload = this.stopDownload.bind(this);
-        this.startUploadFile = this.startUploadFile.bind(this);
-        this.abortLocalUpload = this.abortLocalUpload.bind(this);
-        this.startRemoteUpload = this.startRemoteUpload.bind(this);
         this.abortSelectFile = this.abortSelectFile.bind(this);
     }
 
@@ -228,148 +229,25 @@ class Home extends Component {
     }
 
     abortSelectFile() {
-        console.log("Abort select file");
+        console.log("Close select file window");
         this.dialogGetFile(HIDE);
-        this.address = '';
-        this.remoteAvailable = false;
         this.setState({
-            maxFileSize: 0
+            upload: {
+                maxFileSize: 0,
+                remoteAvailable: false,
+                remoteMaxSize: 0,
+                address: ''
+            }
         });
         firebase.database().ref('links/' + this.state.clientId + '/client' ).set({
             geturl: "cancel"
         });
+        console.log("Event (" + this.state.clientId + ") : ok");
         this.updateQR();
-
-    }
-
-    startUploadFile(file) {
-        this.dialogGetFile(HIDE);
-        if (this.address.match( /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/ ) !== null) {
-            this.dialogDownloading(WAIT);
-            let url = config.localProtocol + '://' + this.address + ":" + config.localPort;
-            this.timerId = setTimeout(this.abortLocalUpload, config.localTimeOut, file);
-            this.request = $.ajax({
-                url: url,
-                success: () => {
-                    console.log("OK");
-                    clearTimeout(this.timerId);
-                    this.dialogDownloading(HIDE);
-                    this.startLocalUpload(file);
-                }
-            });
-        } else {
-            this.startRemoteUpload(file);
-        }
-    }
-
-    abortLocalUpload(file) {
-        console.log("Local uploading error");
-        clearTimeout(this.timerId);
-        this.request.abort();
-        this.startRemoteUpload(file);
-    }
-
-    startLocalUpload(file) {
-        console.log("Upload locally");
-        this.dialogDownloading(LOADING, 0);
-        console.time("LocalUpload");
-        let url = config.localProtocol + '://' + this.address + ":" + config.localPort + "/" + this.state.clientId;
-        let context = this;
-
-        let formData = new FormData();
-        const blob = new Blob([file], { type: 'application/octet-stream' });
-        formData.append('filesize', file.size);
-        formData.append('file', blob, file.name);
-        console.log("File size: " + file.size);
-
-        axios
-          .post(url, formData, {
-            onUploadProgress: ProgressEvent => {
-              let percent = Math.round(ProgressEvent.loaded / ProgressEvent.total*100);
-              context.dialogDownloading(LOADING, percent);
-              console.log('Upload is ' + percent + '% done');
-            }
-          })
-          .then(res => {
-            context.dialogDownloading(HIDE);
-            console.timeEnd("LocalUpload");
-            console.log("Upload status: OK");
-            console.log("Event (" + context.state.clientId + ") : ok");
-            firebase.database().ref('links/' + context.state.clientId ).remove();
-            context.updateQR();
-          })
-          .catch(function (error) {
-            context.dialogDownloading(HIDE);
-            console.timeEnd("LocalUpload");
-            console.log("Upload status: error");
-            context.startRemoteUpload(file);
-          });
-    }
-
-    startRemoteUpload(file) {
-        if (this.remoteAvailable) {
-            if (file.size < (this.state.maxFileSize * 1024)) {
-                console.log("Upload remotely");
-                this.dialogDownloading(LOADING, 0);
-                let storageRef = firebase.storage().ref();
-                let fileRef = storageRef.child('userfiles/' + this.state.clientId + '/' + file.name);
-                let metadata = {
-                    contentType: 'application/octet-stream',
-                };
-                let uploadTask = fileRef.put(file, metadata);
-                let context = this;
-                uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
-                    function(snapshot) {
-                        let progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-                        console.log('Upload is ' + progress + '% done');
-                        context.dialogDownloading(LOADING, progress);
-                    }, function(error) {
-                        context.dialogDownloading(HIDE);
-                        console.log("Event (" + context.state.clientId + ") : error");
-                        firebase.database().ref('links/' + context.state.clientId + '/client' ).set({
-                            geturl: "error"
-                        });
-                        context.updateQR();
-                    }, function() {
-                        context.dialogDownloading(HIDE);
-                        uploadTask.snapshot.ref.getDownloadURL().then(
-                            function(downloadURL) {
-                                console.log("Event (" + context.state.clientId + ") : restart");
-                                firebase.database().ref('links/' + context.state.clientId + '/client' ).set({
-                                    geturl: downloadURL
-                                });
-                                firebase.database().ref('files/' + context.state.clientId).set({
-                                    timestamp: Date.now(),
-                                    userid: context.state.clientId,
-                                    fileref: "/userfiles/" + context.state.clientId + "/" + file.name
-                                });
-                                context.updateQR();
-                            }
-                        );
-                    });
-            } else {
-                console.log("Upload remotely abort. File too large for remote transfer.");
-                this.dialogDownloading(HIDE);
-                this.dialogMessage(SHOW, "File too large for remote transfer");
-                console.log("Event (" + this.state.clientId + ") : error");
-                firebase.database().ref('links/' + this.state.clientId + '/client' ).set({
-                    geturl: "error"
-                });
-                this.updateQR();
-            }
-        } else {
-            console.log("Upload remotely abort. Maximum file transfers per day limit reached.");
-            this.dialogDownloading(HIDE);
-            this.dialogMessage(SHOW, "Maximum file transfers per day limit reached");
-            console.log("Event (" + this.state.clientId + ") : error");
-            firebase.database().ref('links/' + this.state.clientId + '/client' ).set({
-                geturl: "error"
-            });
-            this.updateQR();
-        }
     }
 
     setDatabaseListener() {
+        this.allLinksRef = firebase.database()
         this.linkRef = firebase.database().ref('links/' + this.state.clientId );
         this.linkRef.on("value", (snapshot) => {
             console.log("Event (" + this.state.clientId + ") : processing ... ");
@@ -399,7 +277,16 @@ class Home extends Component {
             if (ip === "cancel") {
                 console.log("Cancel.");
                 console.log("Event (" + this.state.clientId + ") : ok");
-                this.dialogDownloading(HIDE);
+                this.setIdle();
+                this.setState({
+                    upload: {
+                        maxFileSize: 0,
+                        remoteAvailable: false,
+                        remoteMaxSize: 0,
+                        address: ''
+                    }
+
+                });
                 firebase.database().ref('links/' + this.state.clientId ).remove();
                 this.updateQR();
                 return
@@ -424,13 +311,17 @@ class Home extends Component {
             if (typeof this.fileSize !== 'undefined') {
                 console.log("Ready to upload file. Waiting file select ...");
                 this.dialogGetFile(SHOW);
-                this.address = ip;
-                this.remoteAvailable = snapshot.val().client.remote === "enable";
                 this.setState({
-                    maxFileSize: snapshot.val().client.getmax
+                    upload: {
+                        maxFileSize: snapshot.val().client.getfs,
+                        remoteAvailable: snapshot.val().client.remote === "enable",
+                        remoteMaxSize: snapshot.val().client.getmax,
+                        address: ip
+                    }
                 });
-                console.log("IP: " + this.address);
-                console.log("MaxFileSize: " + this.state.maxFileSize);
+                console.log("IP: " + this.state.upload.address);
+                console.log("MaxFileSize: " + this.state.upload.maxFileSize);
+                console.log("MaxRemoteSize: " + this.state.upload.remoteMaxSize);
                 return
             }
 
@@ -516,10 +407,6 @@ class Home extends Component {
         }
     }
 
-    test() {
-        this.dialogGetFile(SHOW);
-    }
-
     render() {
         let browserwarning = "";
         let qrcode = "";
@@ -550,7 +437,6 @@ class Home extends Component {
         }
         return (
             <div className="container-fluid">
-                <button onClick={this.test.bind(this)}>Test</button>
                 <Helmet>
                   <title>{this.state.title}</title>
                 </Helmet>
@@ -570,7 +456,7 @@ class Home extends Component {
                 <DialogDownloading isOpen={this.state.transfering} rate={this.state.rate} />
                 <DialogFollowLink isOpen={this.state.dialogFollow} linkfollow={this.state.linkfollow} onContinue={this.continueDownload} onFollow={this.stopDownload}/>
                 <DialogMessage isOpen={this.state.dialogMessage} message={this.state.message} onSecondaryClick={this.setIdle} secondaryButton="OK"/>
-                <DialogGetFile isOpen={this.state.dialogGetFile} maxFileSize={this.state.maxFileSize} onSelectFile={this.startUploadFile} onCancelSelect={this.abortSelectFile}/>
+                <DialogGetFile isOpen={this.state.dialogGetFile} uploadState={this.state.upload} clientId={this.state.clientId} onSelectFile={this.startUploadFile} onCancelSelect={this.abortSelectFile}/>
             </div>
         )
     }
