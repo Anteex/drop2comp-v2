@@ -33,6 +33,6 @@ Scan QR-code ...
 
 ... and wait for download is complete.
 
-![](http://drop2comp.com/images/img2.png)
+![](http://drop2comp.com/images/img3.png)
 
 ##### If your phone and computer included in the same local network then a full size of transferring files not taken into account.
