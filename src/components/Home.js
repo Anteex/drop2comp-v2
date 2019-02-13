@@ -17,12 +17,8 @@ import { withLocalize } from "react-localize-redux";
 import { Translate } from "react-localize-redux";
 import textHome from "../translations/Home.json";
 import { Helmet } from "react-helmet";
+import { HIDE, SHOW, WAIT, LOADING } from "../helpers/const";
 
-
-const HIDE = 0;
-const SHOW = 1;
-const WAIT = 2;
-const LOADING = 3;
 
 class Home extends Component {
 

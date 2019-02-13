@@ -1,6 +1,10 @@
 import { config } from '../config'
 import axios from 'axios'
 import $ from 'jquery'
+import * as firebase from 'firebase/app'
+import 'firebase/database'
+import 'firebase/storage'
+import { OK, ERROR_MAX_FILE_PER_DAY, ERROR_MAX_REMOTE_SIZE, ERROR_REMOTE_UPLOAD } from '../helpers/const'
 
 
 export function processUpload(file, progress, uploadState, clientId) {
@@ -36,7 +40,7 @@ export function processUpload(file, progress, uploadState, clientId) {
           .then(res => {
             console.timeEnd("LocalUpload");
             console.log("Upload status: OK");
-            resolve(0)
+            resolve(OK)
           })
           .catch(function (error) {
             console.timeEnd("LocalUpload");
@@ -46,69 +50,48 @@ export function processUpload(file, progress, uploadState, clientId) {
     }
 
     const startRemoteUpload = (resolve, reject) => {
-        console.log("REMOTE UPLOADING");
-        resolve(0);
-        return;
-/*        if (this.remoteAvailable) {
-            if (file.size < (this.state.maxFileSize * 1024)) {
+        if (uploadState.remoteAvailable) {
+            if (file.size < (uploadState.remoteMaxSize * 1024)) {
                 console.log("Upload remotely");
-                this.dialogDownloading(LOADING, 0);
                 let storageRef = firebase.storage().ref();
-                let fileRef = storageRef.child('userfiles/' + this.state.clientId + '/' + file.name);
+                let fileRef = storageRef.child('userfiles/' + clientId + '/' + file.name);
                 let metadata = {
                     contentType: 'application/octet-stream',
                 };
                 let uploadTask = fileRef.put(file, metadata);
-                let context = this;
                 uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
                     function(snapshot) {
-                        let progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-                        console.log('Upload is ' + progress + '% done');
-                        context.dialogDownloading(LOADING, progress);
+                        let perc = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                        console.log('Upload is ' + perc + '% done');
+                        progress(perc);
                     }, function(error) {
-                        context.dialogDownloading(HIDE);
-                        console.log("Event (" + context.state.clientId + ") : error");
-                        firebase.database().ref('links/' + context.state.clientId + '/client' ).set({
-                            geturl: "error"
-                        });
-                        context.updateQR();
+                        reject(ERROR_REMOTE_UPLOAD);
                     }, function() {
-                        context.dialogDownloading(HIDE);
                         uploadTask.snapshot.ref.getDownloadURL().then(
                             function(downloadURL) {
-                                console.log("Event (" + context.state.clientId + ") : restart");
-                                firebase.database().ref('links/' + context.state.clientId + '/client' ).set({
-                                    geturl: downloadURL
-                                });
-                                firebase.database().ref('files/' + context.state.clientId).set({
+                                let url = firebase.database().ref('multiupload/' + clientId + '/' ).push();
+                                url.set({
+                                    url: downloadURL,
                                     timestamp: Date.now(),
-                                    userid: context.state.clientId,
-                                    fileref: "/userfiles/" + context.state.clientId + "/" + file.name
                                 });
-                                context.updateQR();
+                                let filesRef = firebase.database().ref('files/').push();
+                                filesRef.set({
+                                    timestamp: Date.now(),
+                                    userid: clientId,
+                                    fileref: "/userfiles/" + clientId + "/" + file.name
+                                });
+                                resolve(OK)
                             }
-                        );
-                    });
+                        )
+                    })
             } else {
                 console.log("Upload remotely abort. File too large for remote transfer.");
-                this.dialogDownloading(HIDE);
-                this.dialogMessage(SHOW, "File too large for remote transfer");
-                console.log("Event (" + this.state.clientId + ") : error");
-                firebase.database().ref('links/' + this.state.clientId + '/client' ).set({
-                    geturl: "error"
-                });
-                this.updateQR();
+                reject(ERROR_MAX_REMOTE_SIZE);
             }
         } else {
             console.log("Upload remotely abort. Maximum file transfers per day limit reached.");
-            this.dialogDownloading(HIDE);
-            this.dialogMessage(SHOW, "Maximum file transfers per day limit reached");
-            console.log("Event (" + this.state.clientId + ") : error");
-            firebase.database().ref('links/' + this.state.clientId + '/client' ).set({
-                geturl: "error"
-            });
-            this.updateQR();
-        } */
+            reject(ERROR_MAX_FILE_PER_DAY);
+        }
     }
 
     return new Promise( (resolve, reject) => {

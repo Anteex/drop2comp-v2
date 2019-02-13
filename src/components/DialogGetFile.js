@@ -8,10 +8,8 @@ import textDialogGetFile from "../translations/DialogGetFile.json";
 import Uploading from "./Uploading"
 import DialogMessage from "./DialogMessage"
 import md5 from 'crypto-js/md5'
+import { HIDE, SHOW } from '../helpers/const'
 
-
-const HIDE = 0;
-const SHOW = 1;
 
 class DialogGetFile extends Component {
 
