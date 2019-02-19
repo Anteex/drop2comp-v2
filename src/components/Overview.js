@@ -4,7 +4,7 @@ import LoadingBar from './LoadingBar'
 import { withLocalize } from "react-localize-redux";
 import textOverview from "../translations/Overview.json";
 import { Helmet } from "react-helmet";
-
+import VideoAbout from "./VideoAbout";
 
 class Overview extends Component {
 
@@ -61,10 +61,15 @@ class Overview extends Component {
             )
         }
         return (
-            <div>
+            <div className="container-fluid">
                 <Helmet>
                     <title>{this.state.title}</title>
                 </Helmet>
+                <div className="row justify-content-center">
+                    <div className="col-12 col-md-auto px-md-5 pt-5">
+                        <VideoAbout />
+                    </div>
+                </div>
                 {content}
             </div>
         )

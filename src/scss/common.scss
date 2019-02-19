@@ -66,3 +66,13 @@ footer {
   }
 
 }
+
+.videoplayer {
+    width: 100%;
+}
+
+@include media-breakpoint-up(md) {
+  .videoplayer {
+      width: 640px;
+  }
+}
