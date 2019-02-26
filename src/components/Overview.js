@@ -53,11 +53,18 @@ class Overview extends Component {
             )
         } else {
             content = (
-                <div className="row justify-content-center">
-                    <div className="col-md-9">
-                        <ReactMarkdown className="overview px-3" source={this.state.text} />
+                <React.Fragment>
+                    <div className="row justify-content-center">
+                        <div className="col-12 col-md-auto px-md-5 pt-5">
+                            <VideoAbout />
+                        </div>
                     </div>
-                </div>
+                    <div className="row justify-content-center">
+                        <div className="col-md-9">
+                            <ReactMarkdown className="overview px-3" source={this.state.text} />
+                        </div>
+                    </div>
+                </React.Fragment>
             )
         }
         return (
@@ -65,11 +72,6 @@ class Overview extends Component {
                 <Helmet>
                     <title>{this.state.title}</title>
                 </Helmet>
-                <div className="row justify-content-center">
-                    <div className="col-12 col-md-auto px-md-5 pt-5">
-                        <VideoAbout />
-                    </div>
-                </div>
                 {content}
             </div>
         )
