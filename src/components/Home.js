@@ -353,9 +353,9 @@ class Home extends Component {
             if (snapshot.val() === null) return;
 
             if (snapshot.key === "total") {
-                console.log("Ready to download " + mlTotal + " files remotely");
-                this.dialogDownloading(SHOW);
                 mlTotal = snapshot.val();
+                console.log("Ready to download " + mlTotal + " files remotely");
+                this.dialogDownloading(WAIT);
                 return
             }
 
