@@ -15,6 +15,7 @@ import { withLocalize } from "react-localize-redux";
 import { Translate } from "react-localize-redux";
 import globalTranslations from "./translations/global.json";
 import ReactGA from 'react-ga';
+import { ToastContainer } from 'react-toastify';
 
 
 class App extends Component {
@@ -59,6 +60,17 @@ class App extends Component {
           <Route render={({ location, history }) => (
               <ScrollToTop>
                   <React.Fragment>
+                      <ToastContainer
+                          position="top-right"
+                          autoClose={3000}
+                          hideProgressBar
+                          newestOnTop
+                          closeOnClick
+                          rtl={false}
+                          pauseOnVisibilityChange
+                          draggable
+                          pauseOnHover
+                      />
                       <div className="d-none d-md-block">
                           <SideNav onSelect={(selected) => {
                               if (selected.startsWith('http:') || selected.startsWith("https:")) {

@@ -15,3 +15,7 @@ $fa-font-path: "/assets/font-awesome/fonts";
 @import '/scss/Uploading.scss';
 @import '/scss/overview.scss';
 @import '/scss/privatepolicy.scss';
+
+$rt-font-family: 'Exo 2';
+@import '../node_modules/react-toastify/scss/main.scss';
+@import '/scss/toast.scss';

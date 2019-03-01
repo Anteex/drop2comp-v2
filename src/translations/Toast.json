@@ -1,0 +1,14 @@
+{
+  "fileGotten": [
+    "File has been received",
+    "Файл получен"
+  ],
+  "fileSent": [
+    "File has been sent",
+    "Файл отправлен"
+  ],
+  "fileSkipped": [
+    "File has been skipped",
+    "Файл пропущен"
+  ]
+}

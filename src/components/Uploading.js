@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Progress } from 'reactstrap'
 import { withLocalize } from "react-localize-redux";
 import textUploading from "../translations/Uploading.json";
+import UploadingError from "./UploadingError";
 
 
 class Uploading extends Component {
@@ -37,34 +38,37 @@ class Uploading extends Component {
         );
         const close = ( this.props.queryItem.waiting
             ? (
-                    <button className="close text-danger" onClick={this.handleClose}>
+                    <button className="close text-primary" onClick={this.handleClose}>
                         <i className="fa fa-times"></i>
                     </button>
               )
             : ""
-        )
+        );
         const columns = ( this.props.queryItem.waiting
             ? "col-md-6"
             : ""
-        )
+        );
         const fade = ( this.state.show
             ? "fadeIn"
             : "fadeOut"
-        )
+        );
         const text = ( this.state.show
             ? this.props.queryItem.file.name
             : this.props.translate("skipped")
-        )
-        const bg = ( this.props.queryItem.skip
-            ? "bg-warning"
-            : ""
-        )
+        );
+        const uploadingError = ( !!this.props.queryItem.skip
+            ? (
+                <UploadingError error={this.props.queryItem.skip} itemIndex={this.props.itemIndex} />
+            )
+            : null
+        );
         return (
-            <div className={"py-1 col-12 " + columns + " "  + fade + " " + bg}>
+            <div className={"py-1 col-12 " + columns + " "  + fade }>
                 {close}
                 <div className="text-truncate">
                     <small>
                         {text}
+                        {uploadingError}
                     </small>
                 </div>
                 {progress}
