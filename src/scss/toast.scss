@@ -1,0 +1,13 @@
+.Toastify__toast {
+  padding: 8px 16px !important;
+  &--default {
+    background: #555;
+    color: #fff;
+  }
+}
+
+.Toastify__close-button {
+  &--default {
+    color: #fff;
+  }
+}

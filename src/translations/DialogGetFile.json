@@ -15,5 +15,23 @@
   "questionText": [
     "Uploading is not completed. Left ${ count } file(s). Do you really want to cancel uploading?",
     "Загрузка не завершена. Осталось ${ count } файл(ов).<br /><br /> Вы действительно хотите отменить загрузку?"
+  ],
+  "yes": ["Yes", "Да"],
+  "no": ["No", "Нет"],
+  "error_account_filesize_limit": [
+    "You have not enough MB to get this file",
+    "У вас недостаточно МБ для получения этого файла"
+  ],
+  "error_max_file_per_day": [
+    "Maximum transfer files per day limit has been exceeded",
+    "Достигнут лимит передачи файлов за день"
+  ],
+  "error_max_remote_size": [
+    "This file is too big for remote transferring",
+    "Этот файл слишком большой для удаленной передачи"
+  ],
+  "error_remote_upload": [
+    "Error remote uploading",
+    "Ошибка удаленной загрузки"
   ]
 }

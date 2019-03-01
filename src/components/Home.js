@@ -16,8 +16,10 @@ import downloadFile from '../helpers/downloadFile'
 import { withLocalize } from "react-localize-redux";
 import { Translate } from "react-localize-redux";
 import textHome from "../translations/Home.json";
+import textToast from "../translations/Toast.json";
 import { Helmet } from "react-helmet";
 import { HIDE, SHOW, WAIT, LOADING } from "../helpers/const";
+import { toast } from 'react-toastify';
 
 
 class Home extends Component {
@@ -43,6 +45,7 @@ class Home extends Component {
         };
 
         this.props.addTranslation(textHome);
+        this.props.addTranslation(textToast);
 
         this.setIdle = this.setIdle.bind(this);
         this.abortLocalDownload = this.abortLocalDownload.bind(this);
@@ -194,6 +197,7 @@ class Home extends Component {
         downloadFile(url);
         console.log("Event (" + this.state.clientId + ") : ok");
         firebase.database().ref('links/' + this.state.clientId ).remove();
+        toast(this.props.translate("fileGotten"));
         this.updateQR();
     }
 
@@ -243,9 +247,10 @@ class Home extends Component {
     }
 
     setDatabaseListener() {
-        this.allLinksRef = firebase.database()
+        //this.allLinksRef = firebase.database()
         this.linkRef = firebase.database().ref('links/' + this.state.clientId );
         this.linkRef.on("value", (snapshot) => {
+
             console.log("Event (" + this.state.clientId + ") : processing ... ");
 
             if (snapshot.val() === null) {
@@ -378,6 +383,7 @@ class Home extends Component {
             if (adrs !== "cancel") {
                 console.log("Downloading " + mlDownloaded + " of " + mlTotal);
                 downloadFile(adrs);
+                toast(this.props.translate("fileGotten"));
             } else {
                 console.log("Downloading " + mlDownloaded + " cancel");
             }

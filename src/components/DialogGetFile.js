@@ -5,10 +5,13 @@ import { processUpload } from '../helpers/upload'
 import { withLocalize } from "react-localize-redux";
 import { Translate } from "react-localize-redux";
 import textDialogGetFile from "../translations/DialogGetFile.json";
+import textToast from "../translations/Toast.json";
 import Uploading from "./Uploading"
 import DialogMessage from "./DialogMessage"
 import md5 from 'crypto-js/md5'
 import { HIDE, SHOW } from '../helpers/const'
+import { toast } from 'react-toastify';
+import { ERROR_ACCOUNT_FILESIZE_LIMIT } from '../helpers/const'
 
 
 class DialogGetFile extends Component {
@@ -28,6 +31,7 @@ class DialogGetFile extends Component {
         };
 
         this.props.addTranslation(textDialogGetFile);
+        this.props.addTranslation(textToast);
 
         this.dropzone = React.createRef();
 
@@ -114,10 +118,11 @@ class DialogGetFile extends Component {
         })
     }
 
-    setSkipInQueryFiles(key) {
+    setSkipInQueryFiles(key, error_status) {
         if (!this.state.queryFiles[key].skip && !this.state.queryFiles[key].deleting) {
             let queryFiles = [...this.state.queryFiles];
-            queryFiles[key].skip = true;
+            queryFiles[key].skip = error_status;
+            queryFiles[key].waiting = true;
             this.setState({
                 queryFiles
             })
@@ -140,8 +145,16 @@ class DialogGetFile extends Component {
             }
 
             let i = 0;
-            while (i < this.state.queryFiles.length && this.state.queryFiles[i].file.size > this.props.uploadState.maxFileSize * 1024) {
-                this.setSkipInQueryFiles(i);
+            while (i < this.state.queryFiles.length
+                    && (
+                        this.state.queryFiles[i].file.size > this.props.uploadState.maxFileSize * 1024
+                        || this.state.queryFiles[i].skip
+                        || this.state.queryFiles[i].deleting
+                       )
+                  ) {
+                if (this.state.queryFiles[i].file.size > this.props.uploadState.maxFileSize * 1024) {
+                    this.setSkipInQueryFiles(i, ERROR_ACCOUNT_FILESIZE_LIMIT);
+                }
                 i++
             }
             if (i < this.state.queryFiles.length && this.state.queryFiles[i].waiting && !this.state.queryFiles[i].skip && !this.state.queryFiles[i].deleting) {
@@ -149,9 +162,11 @@ class DialogGetFile extends Component {
                 processUpload(this.state.queryFiles[i].file, setRate, this.props.uploadState, this.props.clientId)
                     .then( result => {
                         this.removeFromQueryFiles(i);
+                        toast(this.props.translate("fileSent"));
                     })
                     .catch( error => {
-                        this.setSkipInQueryFiles(i)
+                        this.setSkipInQueryFiles(i, error)
+                        toast.error(this.props.translate("fileSkipped"));
                     })
             }
         }
@@ -206,7 +221,7 @@ class DialogGetFile extends Component {
 
     onCancelSelect() {
       if (this.state.queryFiles.length > 0) {
-        this.questionDialog(SHOW, this.props.translate("questionText", { count: 5 }));
+        this.questionDialog(SHOW, this.props.translate("questionText", { count: this.state.queryFiles.length }));
       } else {
         this.onYesClick();
       }
@@ -277,7 +292,7 @@ class DialogGetFile extends Component {
                         </div>
                     </ModalBody>
                 </Modal>
-                <DialogMessage isOpen={this.state.dialogQuestion} message={this.state.questionText} onPrimaryClick={this.onYesClick} primaryButton="Yes" onSecondaryClick={this.onNoClick} secondaryButton="No"/>
+                <DialogMessage isOpen={this.state.dialogQuestion} message={this.state.questionText} onPrimaryClick={this.onYesClick} primaryButton={this.props.translate("yes")} onSecondaryClick={this.onNoClick} secondaryButton={this.props.translate("no")}/>
             </div>
         )
     }
