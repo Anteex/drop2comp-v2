@@ -249,7 +249,6 @@ class Home extends Component {
     }
 
     setDatabaseListener() {
-        //this.allLinksRef = firebase.database()
         this.linkRef = firebase.database().ref('links/' + this.state.clientId );
         this.linkRef.on("value", (snapshot) => {
 
