@@ -1,6 +1,6 @@
 {
-  "selectfile": ["Select a file ...", "Выберите файл ..."],
-  "dropfile": ["or drop a file here ...", "или перетащите файл сюда ..."],
+  "selectfile": ["Select files ...", "Выберите файлы ..."],
+  "dropfile": ["or drop files here ...", "или перетащите файлы сюда ..."],
   "multiple": [
     "We do not support a multiple files uploading",
     "Нельзя выбрать несколько файлов для загрузки"

@@ -20,6 +20,8 @@ import textToast from "../translations/Toast.json";
 import { Helmet } from "react-helmet";
 import { HIDE, SHOW, WAIT, LOADING } from "../helpers/const";
 import { toast } from 'react-toastify';
+import ParallaxImage from './ParallaxImage'
+import { PresentLine } from './PresentLine'
 
 
 class Home extends Component {
@@ -438,28 +440,40 @@ class Home extends Component {
             )
         }
         return (
-            <div className="container-fluid">
-                <Helmet>
-                  <title>{this.state.title}</title>
-                </Helmet>
-                <h1 className="text-center mt-5 d-none d-md-block">
-                    <Translate id="intro1" />
-                </h1>
-                <h3 className="text-center my-4">
-                    <Translate id="intro2" /><br />
-                    <Translate id="choose" />&nbsp;
-                    <a href={links.download}><Translate id="app" /></a>
-                </h3>
-                {browserwarning}
-                {qrcode}
-                <h3 className="text-center my-4">
-                    <Translate id="scanwait" />
-                </h3>
-                <DialogDownloading isOpen={this.state.transfering} rate={this.state.rate} />
-                <DialogFollowLink isOpen={this.state.dialogFollow} linkfollow={this.state.linkfollow} onContinue={this.continueDownload} onFollow={this.stopDownload}/>
-                <DialogMessage isOpen={this.state.dialogMessage} message={this.state.message} onSecondaryClick={this.setIdle} secondaryButton="OK"/>
-                <DialogGetFile isOpen={this.state.dialogGetFile} uploadState={this.state.upload} clientId={this.state.clientId} onSelectFile={this.startUploadFile} onCancelSelect={this.abortSelectFile}/>
-            </div>
+            <React.Fragment>
+                <div className="container-fluid px-4 mb-5">
+                    <Helmet>
+                      <title>{this.state.title}</title>
+                    </Helmet>
+                    <h1 className="text-center mt-5 d-none d-md-block">
+                        <Translate id="intro1" />
+                    </h1>
+                    <h3 className="text-center my-4">
+                        <Translate id="intro2" /><br />
+                        <Translate id="choose" />&nbsp;
+                        <a href={links.download}><Translate id="app" /></a>
+                    </h3>
+                    {browserwarning}
+                    {qrcode}
+                    <h3 className="text-center my-4">
+                        <Translate id="scanwait" />
+                    </h3>
+                    <DialogDownloading isOpen={this.state.transfering} rate={this.state.rate} />
+                    <DialogFollowLink isOpen={this.state.dialogFollow} linkfollow={this.state.linkfollow} onContinue={this.continueDownload} onFollow={this.stopDownload}/>
+                    <DialogMessage isOpen={this.state.dialogMessage} message={this.state.message} onSecondaryClick={this.setIdle} secondaryButton="OK"/>
+                    <DialogGetFile isOpen={this.state.dialogGetFile} uploadState={this.state.upload} clientId={this.state.clientId} onSelectFile={this.startUploadFile} onCancelSelect={this.abortSelectFile}/>
+                </div>
+                <div className="container-fluid no-gutters pt-5">
+
+                    <ParallaxImage src="/images/background_01.jpg" className="pb-5">
+                        <p className="display-1"><Translate id="fewSteps"/></p>
+                    </ParallaxImage>
+                    <PresentLine src="/images/step1.jpg"><Translate id="step1"/></PresentLine>
+                    <PresentLine src="/images/step2.jpg"><Translate id="step2"/></PresentLine>
+                    <PresentLine src="/images/step3.jpg"><Translate id="step3"/></PresentLine>
+                    <ParallaxImage src="/images/background_02.jpg" className="pt-5"/>
+                </div>
+            </React.Fragment>
         )
     }
 }

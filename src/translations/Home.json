@@ -24,6 +24,22 @@
   "notCompatible": [
     "Your browser is not compatible with our service. We recommend using",
     "Ваш браузер не совместим с нашим сервисом. Мы рекомендуем использовать"
+  ],
+  "fewSteps": [
+    "Just a few steps:",
+    "Всего несколько шагов:"
+  ],
+  "step1": [
+    "Share via... drop2comp",
+    "Поделиться через... drop2comp"
+  ],
+  "step2": [
+    "Scan QR-code",
+    "Отсканировать QR-код"
+  ],
+  "step3": [
+    "Your files will be uploaded on your PC",
+    "Файлы закачены на компьютер"
   ]
 
 }
