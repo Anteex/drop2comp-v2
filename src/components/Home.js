@@ -463,13 +463,16 @@ class Home extends Component {
                     <DialogGetFile isOpen={this.state.dialogGetFile} uploadState={this.state.upload} clientId={this.state.clientId} onSelectFile={this.startUploadFile} onCancelSelect={this.abortSelectFile}/>
                 </div>
                 <div className="container-fluid no-gutters pt-5">
-
                     <ParallaxImage src="/images/background_01.jpg" className="pb-5">
                         <p className="display-1"><Translate id="fewSteps"/></p>
                     </ParallaxImage>
-                    <PresentLine src="/images/step1.jpg"><Translate id="step1"/></PresentLine>
-                    <PresentLine src="/images/step2.jpg"><Translate id="step2"/></PresentLine>
-                    <PresentLine src="/images/step3.jpg"><Translate id="step3"/></PresentLine>
+                </div>
+                <div class="container">
+                    <PresentLine src="/images/step1.jpg" alt="Step #1"><Translate id="step1"/></PresentLine>
+                    <PresentLine src="/images/step2.jpg" alt="Step #2"><Translate id="step2"/></PresentLine>
+                    <PresentLine src="/images/step3.jpg" alt="Step #3"><Translate id="step3"/></PresentLine>
+                </div>
+                <div class="container-fluid no-gutters">
                     <ParallaxImage src="/images/background_02.jpg" className="pt-5"/>
                 </div>
             </React.Fragment>

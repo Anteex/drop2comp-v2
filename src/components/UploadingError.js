@@ -38,6 +38,8 @@ class UploadingError extends React.Component {
             case ERROR_REMOTE_UPLOAD:
                 text = this.props.translate("error_remote_upload");
                 break;
+            default:
+                text = this.props.translate("error_remote_upload");
         }
         return (
             <React.Fragment>
