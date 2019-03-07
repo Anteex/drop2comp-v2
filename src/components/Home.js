@@ -467,13 +467,21 @@ class Home extends Component {
                         <p className="display-1"><Translate id="fewSteps"/></p>
                     </ParallaxImage>
                 </div>
-                <div class="container">
+                <div className="container">
                     <PresentLine src="/images/step1.jpg" alt="Step #1"><Translate id="step1"/></PresentLine>
                     <PresentLine src="/images/step2.jpg" alt="Step #2"><Translate id="step2"/></PresentLine>
                     <PresentLine src="/images/step3.jpg" alt="Step #3"><Translate id="step3"/></PresentLine>
                 </div>
-                <div class="container-fluid no-gutters">
-                    <ParallaxImage src="/images/background_02.jpg" className="pt-5"/>
+                <div className="container-fluid no-gutters">
+                    <ParallaxImage src="/images/background_02.jpg" className="pt-5">
+                        <a
+                            href={links.download}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <img src="/images/google-play-badge.png" alt="google play badge"/>
+                        </a>
+                    </ParallaxImage>
                 </div>
             </React.Fragment>
         )

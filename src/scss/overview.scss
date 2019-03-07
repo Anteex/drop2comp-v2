@@ -1,10 +1,15 @@
 .overview {
 
-  h1,h2,h3,h4,h5,h6 {
+  h1,h2,h3,h4 {
     @extend .text-center;
     @extend .pt-5;
     @extend .pb-3;
+  }
 
+  h5,h6 {
+    @extend .text-left;
+    @extend .pt-5;
+    @extend .pb-3;
   }
 
   img {
