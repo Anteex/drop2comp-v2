@@ -60,6 +60,14 @@ footer {
   }
 }
 
+blockquote {
+    @extend .blockquote;
+    @extend .alert;
+    @extend .alert-dark;
+    @extend .mb-5;
+    border-left: 3px solid $primary;
+}
+
 .clickable {
 
   cursor: pointer;
