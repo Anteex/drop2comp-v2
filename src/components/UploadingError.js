@@ -1,6 +1,6 @@
 import React from 'react';
 import { Popover, PopoverBody } from 'reactstrap';
-import { ERROR_ACCOUNT_FILESIZE_LIMIT, ERROR_MAX_FILE_PER_DAY, ERROR_MAX_REMOTE_SIZE, ERROR_REMOTE_UPLOAD } from '../helpers/const'
+import { ERROR_ACCOUNT_FILESIZE_LIMIT, ERROR_MAX_FILE_PER_DAY, ERROR_MAX_REMOTE_SIZE, ERROR_REMOTE_UPLOAD, ERROR_FATAL } from '../helpers/const'
 import { withLocalize } from "react-localize-redux";
 
 
@@ -37,6 +37,9 @@ class UploadingError extends React.Component {
                 break;
             case ERROR_REMOTE_UPLOAD:
                 text = this.props.translate("error_remote_upload");
+                break;
+            case ERROR_FATAL:
+                text = this.props.translate("error_fatal");
                 break;
             default:
                 text = this.props.translate("error_remote_upload");

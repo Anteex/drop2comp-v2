@@ -4,7 +4,7 @@ import $ from 'jquery'
 import * as firebase from 'firebase/app'
 import 'firebase/database'
 import 'firebase/storage'
-import { OK, ERROR_MAX_FILE_PER_DAY, ERROR_MAX_REMOTE_SIZE, ERROR_REMOTE_UPLOAD } from '../helpers/const'
+import { OK, ERROR_MAX_FILE_PER_DAY, ERROR_MAX_REMOTE_SIZE, ERROR_REMOTE_UPLOAD, ERROR_FATAL } from '../helpers/const'
 
 
 export function processUpload(file, progress, uploadState, clientId) {
@@ -45,7 +45,7 @@ export function processUpload(file, progress, uploadState, clientId) {
           .catch(function (error) {
             console.timeEnd("LocalUpload");
             console.log("Upload status: error");
-            startRemoteUpload(file);
+            reject(ERROR_FATAL);
           });
     }
 

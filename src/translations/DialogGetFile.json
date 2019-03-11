@@ -16,6 +16,10 @@
     "Uploading is not completed. Left ${ count } file(s). Do you really want to cancel uploading?",
     "Загрузка не завершена. Осталось ${ count } файл(ов).<br /><br /> Вы действительно хотите отменить загрузку?"
   ],
+  "restartDialog": [
+    "Close this dialog and start again, please",
+    "Закройте это окно и попробуйте снова"
+  ],
   "yes": ["Yes", "Да"],
   "no": ["No", "Нет"],
   "error_account_filesize_limit": [
@@ -33,5 +37,9 @@
   "error_remote_upload": [
     "Error remote uploading",
     "Ошибка удаленной загрузки"
+  ],
+  "error_fatal": [
+    "Fatal error upload",
+    "Критическая ошибка загрузки"
   ]
 }
