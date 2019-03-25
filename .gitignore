@@ -26,3 +26,5 @@ yarn-error.log*
 
 # assets in source
 #/src/assets
+
+/.idea

@@ -11,7 +11,7 @@ import DialogMessage from "./DialogMessage"
 import md5 from 'crypto-js/md5'
 import { HIDE, SHOW } from '../helpers/const'
 import { toast } from 'react-toastify';
-import { ERROR_ACCOUNT_FILESIZE_LIMIT } from '../helpers/const'
+import { ERROR_ACCOUNT_FILESIZE_LIMIT, ERROR_FATAL } from '../helpers/const'
 
 
 class DialogGetFile extends Component {
@@ -27,7 +27,8 @@ class DialogGetFile extends Component {
             },
             queryFiles: [],
             dialogQuestion: false,
-            questionText: ''
+            questionText: '',
+            fatalError: false
         };
 
         this.props.addTranslation(textDialogGetFile);
@@ -139,7 +140,7 @@ class DialogGetFile extends Component {
     }
 
     processQueryFiles() {
-        if (this.state.queryFiles.length > 0) {
+        if (this.state.queryFiles.length > 0 && !this.state.fatalError) {
             const setRate = (rate) => {
                 this.setRateInQueryFiles(i, rate)
             }
@@ -166,7 +167,14 @@ class DialogGetFile extends Component {
                     })
                     .catch( error => {
                         this.setSkipInQueryFiles(i, error)
-                        toast.error(this.props.translate("fileSkipped"));
+                        if (error !== ERROR_FATAL) {
+                            toast.error(this.props.translate("fileSkipped"));
+                        } else {
+                            toast.error(this.props.translate("error_fatal"));
+                            this.setState({
+                                fatalError: true
+                            })
+                        }
                     })
             }
         }
@@ -220,7 +228,7 @@ class DialogGetFile extends Component {
     }
 
     onCancelSelect() {
-      if (this.state.queryFiles.length > 0) {
+      if (this.state.queryFiles.length > 0 && !this.state.fatalError) {
         this.questionDialog(SHOW, this.props.translate("questionText", { count: this.state.queryFiles.length }));
       } else {
         this.onYesClick();
@@ -230,7 +238,8 @@ class DialogGetFile extends Component {
     onYesClick() {
       this.questionDialog(HIDE);
       this.setState({
-        queryFiles: []
+        queryFiles: [],
+        fatalError: false
       });
       this.props.onCancelSelect();
     }
@@ -267,6 +276,33 @@ class DialogGetFile extends Component {
                 <Uploading queryItem={item} key={md5(item.file.name).toString()} itemIndex={key} handleClose={this.removeFromQueryFiles} handleDelete={this.handleDeletingItem}/>
             )
         });
+
+        const dropZone = (!this.state.fatalError
+                        ? (
+                            <React.Fragment>
+                                <div className="dropzone" ref={this.dropzone}>
+                                    {closeBtn}
+                                    <div className="row align-items-center justify-content-center h-100">
+                                        <Button color="primary" size="lg" onClick={this.selectFile}><Translate id="selectfile" /></Button>
+                                        <input type="file" id="inputGetFile" name="files[]" className="d-none" onChange={this.handleSelectFile} multiple/>
+                                    </div>
+                                    <div className="note w-100">
+                                        <h5 className="text-center"><Translate id="dropfile"/></h5>
+                                    </div>
+                                </div>
+                                {warningTooBigSize}
+                            </React.Fragment>
+                        )
+                        : (
+                            <React.Fragment>
+                                <div className="dropzone">
+                                    {closeBtn}
+                                    <div className="row align-items-center justify-content-center h-100">
+                                        <p><Translate id="restartDialog"/></p>
+                                    </div>
+                                </div>
+                            </React.Fragment>
+                        ))
         return (
             <div>
                 <Modal
@@ -276,17 +312,7 @@ class DialogGetFile extends Component {
                     fade={true}
                 >
                     <ModalBody>
-                        <div className="dropzone" ref={this.dropzone}>
-                            {closeBtn}
-                            <div className="row align-items-center justify-content-center h-100">
-                                <Button color="primary" size="lg" onClick={this.selectFile}><Translate id="selectfile" /></Button>
-                                <input type="file" id="inputGetFile" name="files[]" className="d-none" onChange={this.handleSelectFile} multiple/>
-                            </div>
-                            <div className="note w-100">
-                                <h5 className="text-center"><Translate id="dropfile"/></h5>
-                            </div>
-                        </div>
-                        {warningTooBigSize}
+                        {dropZone}
                         <div className="row">
                             {uploadingFiles}
                         </div>
