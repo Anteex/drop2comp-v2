@@ -36,3 +36,9 @@ Scan QR-code ...
 ![](http://drop2comp.com/images/img3.png)
 
 ##### If your phone and computer included in the same local network then a full size of transferring files not taken into account.
+
+> You can't transfer any file larger than the value of available MB in your account.
+
+> After every remote transferring the value of available MB in your account decreases by the size of the transferred file rounded up to 0.1Mb
+
+> After every local transferring the value of available MB in your account decreases by 0.1Mb
