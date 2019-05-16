@@ -39,8 +39,6 @@ Scan QR-code ...
 
 > You can't transfer any file larger than the value of available MB in your account.
 
-
-
 > After every remote transferring the value of available MB in your account decreases by the size of the transferred file rounded up to 0.1Mb
 
 > After every local transferring the value of available MB in your account decreases by 0.1Mb
