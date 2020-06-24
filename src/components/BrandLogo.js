@@ -7,7 +7,7 @@ export default class BrandLogo extends Component {
         return (
             <NavbarBrand href="/">
                 <img src='/images/logo32cnt.png' alt="logo"/>
-                <b>drop2comp</b>
+                <b>Share2any</b>
             </NavbarBrand>
         )
     }

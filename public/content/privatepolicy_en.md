@@ -3,20 +3,20 @@ Private policy
 
 ### INTRODUCTION
 
-##### Welcome to Drop2comp!
+##### Welcome to Share2any!
 
 AnTeex Developer ("we", "our" or "us") values your privacy. This Privacy Policy informs you of your choices and our practices regarding any Information (as defined in the "Information We Collect" section below) you provide to us.
 
-The use of Drop2comp (through the Drop2comp mobile app, http://drop2comp.com or any third party platforms through which Drop2comp is provided) may involve the collection and use of your Information. It is important for you to understand how this happens and how you may control it, so please read this Privacy Policy carefully.
+The use of Share2any (through the Share2any mobile app, http://Share2any.com or any third party platforms through which Share2any is provided) may involve the collection and use of your Information. It is important for you to understand how this happens and how you may control it, so please read this Privacy Policy carefully.
 
-By using Drop2comp, you agree that we may collect, use and share your Information in accordance with this Privacy Policy, as revised from time to time.
+By using Share2any, you agree that we may collect, use and share your Information in accordance with this Privacy Policy, as revised from time to time.
 
-If you wish to contact us regarding this Privacy Policy or any privacy-related matters, please contact us via email at mailto:770386+drop2comp@gmail.com.
+If you wish to contact us regarding this Privacy Policy or any privacy-related matters, please contact us via email at mailto:770386+Share2any@gmail.com.
 
 ##### CHANGES TO THIS PRIVACY POLICY
 This Privacy Policy may be updated from time to time for any reason. We will notify you of any changes to our Privacy Policy by posting the new Privacy Policy here. You are advised to consult this Privacy Policy regularly for any changes, as continued use is deemed approval of all changes.
 
-By continuing to use Drop2comp after any changes to this Privacy Policy, with or without notice from us, you are agreeing to the revised Privacy Policy.
+By continuing to use Share2any after any changes to this Privacy Policy, with or without notice from us, you are agreeing to the revised Privacy Policy.
 
 ##### INFORMATION WE COLLECT
 There are three basic categories of information we collect:
@@ -30,17 +30,17 @@ _Information You Choose to Give Us_
 
 When you interact with our services, we collect the information that you choose to share with us. For example, our services require you to set up an account, so we need to collect a few important details about you, such as a unique username you’d like to go by, an email address.
 
-Of course, you’ll also provide us whatever information you send through the services, such as files you send. Keep in mind that the users you send any content to can always save that content or copy it outside the app. So, the same common sense that applies to the Internet at large applies to Drop2comp as well: don’t share content that you wouldn’t want someone to save or share.
+Of course, you’ll also provide us whatever information you send through the services, such as files you send. Keep in mind that the users you send any content to can always save that content or copy it outside the app. So, the same common sense that applies to the Internet at large applies to Share2any as well: don’t share content that you wouldn’t want someone to save or share.
 
-It probably goes without saying, but we’ll say it anyway: When you contact Drop2comp Support or communicate with us in any other way, we’ll collect whatever information you volunteer.
+It probably goes without saying, but we’ll say it anyway: When you contact Share2any Support or communicate with us in any other way, we’ll collect whatever information you volunteer.
 
 _Information we get when you use our services_
 
-Information we collect as you use Drop2comp, such as Log Data. "Log Data" is technical information that is automatically collected by us when you use Drop2comp, including:
+Information we collect as you use Share2any, such as Log Data. "Log Data" is technical information that is automatically collected by us when you use Share2any, including:
 * Device Information. We collect device-specific information, such as the hardware model, operating system version, advertising identifier, unique application identifiers, unique device identifiers, browser type, language, wireless network, and mobile network information.
-* Metadata, which means information related to items you have made available through Drop2comp, such as the date, time or location that shared files.
+* Metadata, which means information related to items you have made available through Share2any, such as the date, time or location that shared files.
 * Information Collected by Cookies and Other Technologies. Like most online services and mobile applications, we may use cookies and other technologies, such as web storage, and unique advertising identifiers, to collect information about your activity, browser, and device. We may also use these technologies to collect information when you interact with services we offer through one of our partners, such as commerce features. Most web browsers are set to accept cookies by default. If you prefer, you can usually remove or reject browser cookies through the settings on your browser or device. Keep in mind, though, that removing or rejecting cookies could affect the availability and functionality of our services.
-* The IP address of the device or internet service you use to access Drop2comp.
+* The IP address of the device or internet service you use to access Share2any.
 
 _Information We Collect from Third Parties_
 
@@ -73,10 +73,10 @@ We may share information about you in the following ways:
 ##### COMMUNICATIONS FROM US
 _Newsletters and other types of communications_
 
-When you use Drop2comp, we may use your Information to send you emails or push notifications to your device. If you no longer wish to receive these communications, you can do so by following the unsubscribe instructions in the emails we send to you or opting out of notifications at the device level (if available).
+When you use Share2any, we may use your Information to send you emails or push notifications to your device. If you no longer wish to receive these communications, you can do so by following the unsubscribe instructions in the emails we send to you or opting out of notifications at the device level (if available).
 
 ##### AGE RESTRICTIONS
-Children under the age of 18 are not allowed to use Drop2comp. We do not knowingly collect Personal Information from any children under the age of 18. Please contact send email to mailto:770386+drop2comp@gmail.com if you believe we have any Personal Information from any children under the age of 18 – we will promptly investigate (and remove) such Personal Information.
+Children under the age of 18 are not allowed to use Share2any. We do not knowingly collect Personal Information from any children under the age of 18. Please contact send email to mailto:770386+Share2any@gmail.com if you believe we have any Personal Information from any children under the age of 18 – we will promptly investigate (and remove) such Personal Information.
 
 ##### TRANSFER, STORAGE AND SECURITY OF YOUR PERSONAL INFORMATION
 We operate and may continue to operate servers in a number of jurisdictions around the world, so the server on which your Personal Information is used and stored may not be in your jurisdiction.
@@ -85,7 +85,7 @@ You consent to the transfer of your Personal Information (both inside and outsid
 
 We use a variety of generally accepted security technologies and procedures for the purpose of preventing loss, misuse, unauthorized access or disclosure of Information.
 
-Please be aware that despite our efforts, no data security measures can guarantee 100% security at all times. Our systems and the communications networks through which you access Drop2comp may be subject to security breaches and failures which are due to circumstances beyond our reasonable control. If you have any questions regarding the security of your Personal Information, please contact us mailto:770386+drop2comp@gmail.com
+Please be aware that despite our efforts, no data security measures can guarantee 100% security at all times. Our systems and the communications networks through which you access Share2any may be subject to security breaches and failures which are due to circumstances beyond our reasonable control. If you have any questions regarding the security of your Personal Information, please contact us mailto:770386+Share2any@gmail.com
 
 ##### PERIOD OF USE OF YOUR PERSONAL INFORMATION
 We will generally only retain your Personal Information for so long as is necessary to fulfill the purposes for which it was collected, as set out under the "How We Use Information" section above. However, in the following circumstances, we may be required to retain, preserve or disclose your Personal Information for a longer period of time:
@@ -93,13 +93,13 @@ We will generally only retain your Personal Information for so long as is necess
 * in order to comply with a court order, subpoena or another legal process;
 * in response to a request by a government authority, law enforcement agency or similar body (whether situated in your jurisdiction or elsewhere);
 * where we believe it is reasonably necessary to comply with applicable laws or regulations;
-* in order to enforce the Drop2comp Terms of Service or this Privacy Policy, protect our rights, property or safety, or the rights, property or safety of other users of Drop2comp.
+* in order to enforce the Share2any Terms of Service or this Privacy Policy, protect our rights, property or safety, or the rights, property or safety of other users of Share2any.
 
-Subject to applicable laws and regulations, you may have the right to request to receive a copy of and make any corrections to your Personal Information which we hold, and to request that we deactivate and not use any of your Personal Information that is stored by us. You may direct such request to us mailto:770386+drop2comp@gmail.com, or where we offer this option in Drop2comp, you may also log into your account with us and make the appropriate changes. We will use reasonable efforts to respond to all such requests within 60 days.
+Subject to applicable laws and regulations, you may have the right to request to receive a copy of and make any corrections to your Personal Information which we hold, and to request that we deactivate and not use any of your Personal Information that is stored by us. You may direct such request to us mailto:770386+Share2any@gmail.com, or where we offer this option in Share2any, you may also log into your account with us and make the appropriate changes. We will use reasonable efforts to respond to all such requests within 60 days.
 
-Should your account be terminated by you or us for any reason, we will (subject to the above paragraph) take steps to ensure that your Personal Information is no longer available through Drop2comp, or otherwise used by us, within a reasonable period of time (subject to technical limitations) after such account termination. However, it is important to note that communications made by you using Drop2comp may put your Personal Information in the hands of third parties that we cannot control.
+Should your account be terminated by you or us for any reason, we will (subject to the above paragraph) take steps to ensure that your Personal Information is no longer available through Share2any, or otherwise used by us, within a reasonable period of time (subject to technical limitations) after such account termination. However, it is important to note that communications made by you using Share2any may put your Personal Information in the hands of third parties that we cannot control.
 
 ##### CONTACT US
-If you have any questions regarding privacy while using the Application or WebSite, or have questions about our practices, please contact us via email at mailto:770386+drop2comp@gmail.com.
+If you have any questions regarding privacy while using the Application or WebSite, or have questions about our practices, please contact us via email at mailto:770386+Share2any@gmail.com.
 
-__LAST MODIFIED: 2019-03-25__
+__LAST MODIFIED: 2020-06-24__
